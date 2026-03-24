@@ -7,856 +7,668 @@
   <meta name="description" content="Give us 48 hours and we'll build a full AI layer on your current business. If it doesn't save you at least 20 hrs per week — you don't pay.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg-primary: #050508;
-      --bg-secondary: #0a0a0f;
-      --bg-card: #0d0d14;
-      --bg-card-hover: #111119;
-      --border: rgba(255,255,255,0.06);
-      --border-hover: rgba(255,255,255,0.12);
-      --text-primary: #f0f0f5;
-      --text-secondary: #8a8a9a;
-      --text-muted: #55556a;
-      --accent: #6366f1;
-      --accent-glow: rgba(99,102,241,0.15);
-      --accent-bright: #818cf8;
-      --green: #22c55e;
-      --green-glow: rgba(34,197,94,0.15);
-      --cyan: #06b6d4;
-      --cyan-glow: rgba(6,182,212,0.1);
-      --grid-line: rgba(255,255,255,0.03);
+      --black: #000;
+      --white: #fff;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-800: #262626;
+      --gray-900: #171717;
+      --gray-950: #0a0a0a;
+      --red: #dc2626;
+      --red-dark: #b91c1c;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      overflow-x: hidden;
+      background: var(--black);
+      color: var(--white);
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* === GRID BACKGROUND === */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    .grid-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--accent-glow), transparent),
-                  radial-gradient(ellipse 60% 40% at 80% 20%, var(--cyan-glow), transparent);
-    }
-
-    /* === LAYOUT === */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-
-    /* === NAV === */
+    /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      backdrop-filter: blur(20px);
-      background: rgba(5,5,8,0.8);
-      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-900);
     }
     .nav-inner {
-      max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+      max-width: 1140px; margin: 0 auto; padding: 18px 32px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-logo {
+    .logo {
+      font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--white); text-decoration: none;
       display: flex; align-items: center; gap: 10px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em;
-      text-decoration: none; color: var(--text-primary);
     }
-    .nav-logo .logo-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--accent), var(--cyan));
+    .logo-mark {
+      width: 28px; height: 28px; background: var(--red);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; color: #fff;
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.05em;
     }
-    .nav-status {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 0.75rem; color: var(--green);
-      font-family: 'JetBrains Mono', monospace;
+    .nav-right { display: flex; align-items: center; gap: 28px; }
+    .nav-link {
+      font-size: 0.8rem; color: var(--gray-400); text-decoration: none;
+      transition: color 0.2s; font-weight: 500;
     }
-    .nav-status .pulse {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--green);
-      animation: pulse 2s infinite;
+    .nav-link:hover { color: var(--white); }
+    .nav-btn {
+      font-size: 0.8rem; font-weight: 600; padding: 9px 22px;
+      background: var(--white); color: var(--black);
+      border: none; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-      50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
-    }
-    .nav-cta {
-      padding: 8px 20px; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
-      background: var(--accent); color: #fff; border: none; cursor: pointer;
-      text-decoration: none; transition: all 0.2s;
-    }
-    .nav-cta:hover { background: var(--accent-bright); transform: translateY(-1px); }
+    .nav-btn:hover { opacity: 0.85; }
 
-    /* === HERO === */
-    .hero { padding: 140px 0 80px; text-align: center; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 16px; border-radius: 100px;
-      border: 1px solid var(--border);
-      background: rgba(99,102,241,0.06);
-      font-size: 0.75rem; color: var(--accent-bright);
-      font-family: 'JetBrains Mono', monospace;
-      margin-bottom: 32px; letter-spacing: 0.05em;
-    }
-    .hero-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+    /* LAYOUT */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 32px; }
 
+    /* HERO */
+    .hero {
+      padding: 160px 0 100px;
+      border-bottom: 1px solid var(--gray-900);
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red);
+      margin-bottom: 28px;
+    }
     h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700; line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 24px;
-      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 32px;
+      max-width: 900px;
     }
-    h1 .highlight {
-      background: linear-gradient(135deg, var(--accent-bright), var(--cyan));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--text-secondary);
-      max-width: 620px; margin: 0 auto 16px;
-      line-height: 1.6;
-    }
-
-    .hero-guarantee {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem; color: var(--green);
-      padding: 10px 20px; border-radius: 8px;
-      background: var(--green-glow);
-      border: 1px solid rgba(34,197,94,0.2);
-      margin-bottom: 48px;
-    }
-
-    .hero-ctas {
-      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-    .btn-primary {
-      padding: 14px 32px; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
-      background: linear-gradient(135deg, var(--accent), #4f46e5);
-      color: #fff; border: none; cursor: pointer; text-decoration: none;
-      transition: all 0.3s; position: relative; overflow: hidden;
-    }
-    .btn-primary::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1));
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .btn-primary:hover::before { opacity: 1; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(99,102,241,0.3); }
-
-    .btn-secondary {
-      padding: 14px 32px; border-radius: 10px; font-size: 0.95rem; font-weight: 500;
-      background: transparent; color: var(--text-primary);
-      border: 1px solid var(--border); cursor: pointer; text-decoration: none;
-      transition: all 0.3s;
-    }
-    .btn-secondary:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.03); }
-
-    /* === VSL SECTION === */
-    .vsl-section { padding: 0 0 100px; }
-    .vsl-container {
-      max-width: 900px; margin: 0 auto;
-      border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      position: relative;
-    }
-    .vsl-header {
-      display: flex; align-items: center; gap: 8px;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
-    }
-    .vsl-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .vsl-dot.red { background: #ff5f57; }
-    .vsl-dot.yellow { background: #ffbd2e; }
-    .vsl-dot.green { background: #28c840; }
-    .vsl-header-text {
-      flex: 1; text-align: center;
-      font-size: 0.7rem; color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .vsl-placeholder {
-      aspect-ratio: 16/9;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
-      position: relative; cursor: pointer;
-    }
-    .vsl-play {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.3s;
-      box-shadow: 0 0 40px rgba(99,102,241,0.3);
-    }
-    .vsl-play:hover { transform: scale(1.1); box-shadow: 0 0 60px rgba(99,102,241,0.5); }
-    .vsl-play svg { width: 28px; height: 28px; margin-left: 4px; }
-    .vsl-label {
-      margin-top: 20px;
-      font-size: 0.85rem; color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .vsl-grid-overlay {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    /* === METRICS BAR === */
-    .metrics {
-      padding: 0 0 100px;
-    }
-    .metrics-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-      background: var(--border); border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .metric-card {
-      background: var(--bg-card);
-      padding: 32px; text-align: center;
-      transition: background 0.3s;
-    }
-    .metric-card:hover { background: var(--bg-card-hover); }
-    .metric-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.5rem; font-weight: 700;
-      background: linear-gradient(135deg, var(--text-primary), var(--accent-bright));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .metric-label {
-      font-size: 0.8rem; color: var(--text-muted);
-      margin-top: 4px; text-transform: uppercase; letter-spacing: 0.1em;
-    }
-
-    /* === DASHBOARD SECTION === */
-    .dashboard-section { padding: 0 0 100px; }
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; text-transform: uppercase;
-      letter-spacing: 0.15em; color: var(--accent-bright);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700; letter-spacing: -0.02em;
-      margin-bottom: 16px; line-height: 1.1;
-    }
-    .section-desc {
-      font-size: 1rem; color: var(--text-secondary);
-      max-width: 560px; line-height: 1.6; margin-bottom: 48px;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto;
-      gap: 1px;
-      background: var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .dash-card {
-      background: var(--bg-card);
-      padding: 28px;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .dash-card:hover { background: var(--bg-card-hover); }
-    .dash-card::after {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .dash-card:hover::after { opacity: 1; }
-
-    .dash-card.span-8 { grid-column: span 8; }
-    .dash-card.span-4 { grid-column: span 4; }
-    .dash-card.span-6 { grid-column: span 6; }
-    .dash-card.span-3 { grid-column: span 3; }
-
-    .dash-card-header {
-      display: flex; align-items: center; justify-content: space-between;
+    h1 em { font-style: normal; color: var(--red); }
+    .hero-text {
+      font-size: 1.1rem; line-height: 1.6;
+      color: var(--gray-400); max-width: 520px;
       margin-bottom: 20px;
     }
-    .dash-card-title {
-      font-size: 0.75rem; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
+    .hero-guarantee {
+      font-size: 0.85rem; color: var(--white);
+      font-weight: 600; margin-bottom: 48px;
+      display: flex; align-items: center; gap: 8px;
     }
-    .dash-card-status {
-      font-size: 0.65rem; padding: 3px 8px; border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
+    .hero-guarantee span {
+      display: inline-block; width: 18px; height: 18px;
+      background: var(--red); text-align: center;
+      font-size: 0.65rem; line-height: 18px;
     }
-    .status-live { background: var(--green-glow); color: var(--green); }
-    .status-active { background: var(--accent-glow); color: var(--accent-bright); }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-fill {
+      padding: 14px 36px; font-size: 0.85rem; font-weight: 600;
+      background: var(--white); color: var(--black);
+      border: none; cursor: pointer; text-decoration: none;
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-fill:hover { background: var(--gray-200); }
+    .btn-outline {
+      padding: 14px 36px; font-size: 0.85rem; font-weight: 600;
+      background: transparent; color: var(--white);
+      border: 1px solid var(--gray-800); cursor: pointer;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gray-600); }
 
-    /* Interactive chart placeholder */
-    .chart-bars {
-      display: flex; align-items: flex-end; gap: 6px; height: 120px;
-      padding-top: 10px;
+    /* VSL */
+    .vsl {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--gray-900);
     }
-    .chart-bar {
-      flex: 1; border-radius: 3px 3px 0 0;
-      background: linear-gradient(180deg, var(--accent), rgba(99,102,241,0.2));
-      transition: all 0.3s; min-height: 8px;
-    }
-    .chart-bar:hover { filter: brightness(1.3); }
-    .chart-bar.green { background: linear-gradient(180deg, var(--green), rgba(34,197,94,0.2)); }
-
-    .agent-list { display: flex; flex-direction: column; gap: 12px; }
-    .agent-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px; border-radius: 8px;
-      border: 1px solid var(--border);
-      transition: all 0.2s;
-    }
-    .agent-item:hover { border-color: var(--border-hover); background: rgba(255,255,255,0.02); }
-    .agent-icon {
-      width: 36px; height: 36px; border-radius: 8px;
+    .vsl-frame {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--gray-950);
+      border: 1px solid var(--gray-800);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
+      cursor: pointer; transition: border-color 0.3s;
     }
-    .agent-icon.purple { background: var(--accent-glow); }
-    .agent-icon.cyan { background: var(--cyan-glow); }
-    .agent-icon.green { background: var(--green-glow); }
-    .agent-name { font-size: 0.85rem; font-weight: 500; }
-    .agent-desc { font-size: 0.7rem; color: var(--text-muted); }
-    .agent-right { margin-left: auto; text-align: right; }
-    .agent-metric { font-size: 0.85rem; font-weight: 600; color: var(--green); }
-    .agent-metric-label { font-size: 0.65rem; color: var(--text-muted); }
+    .vsl-frame:hover { border-color: var(--gray-600); }
+    .vsl-play {
+      width: 72px; height: 72px; border: 2px solid var(--white);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .vsl-play svg { width: 20px; height: 20px; margin-left: 3px; }
+    .vsl-frame:hover .vsl-play { background: var(--white); }
+    .vsl-frame:hover .vsl-play svg { fill: var(--black); }
 
-    /* Mini stat cards inside dashboard */
-    .mini-stat-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.8rem; font-weight: 700; line-height: 1;
+    /* NUMBERS */
+    .numbers {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--gray-900);
     }
-    .mini-stat-change {
-      font-size: 0.7rem; color: var(--green);
-      font-family: 'JetBrains Mono', monospace;
-      margin-top: 8px;
+    .numbers-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .number-item {
+      padding: 32px 0;
+      border-right: 1px solid var(--gray-900);
+    }
+    .number-item:last-child { border-right: none; }
+    .number-item:first-child { padding-left: 0; }
+    .number-item:not(:first-child) { padding-left: 40px; }
+    .number-val {
+      font-size: 3rem; font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .number-val .accent { color: var(--red); }
+    .number-label {
+      font-size: 0.75rem; color: var(--gray-500);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      font-weight: 500;
     }
 
-    /* Animated typing line */
-    .terminal-line {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; color: var(--text-muted);
-      padding: 12px 0;
+    /* SERVICES */
+    .services {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--gray-900);
     }
-    .terminal-line .cursor {
-      display: inline-block; width: 7px; height: 14px;
-      background: var(--accent); margin-left: 4px;
-      animation: blink 1s infinite;
-      vertical-align: middle;
+    .section-header { margin-bottom: 64px; }
+    .section-eyebrow {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red);
+      margin-bottom: 20px;
     }
-    @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
-
-    .terminal-line .prompt { color: var(--green); }
-    .terminal-line .cmd { color: var(--text-primary); }
-
-    /* === PROCESS SECTION === */
-    .process-section { padding: 0 0 100px; }
-    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
-    .process-card {
-      background: var(--bg-card); padding: 40px 32px;
-      position: relative; transition: background 0.3s;
-    }
-    .process-card:hover { background: var(--bg-card-hover); }
-    .process-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 3rem; font-weight: 700;
-      background: linear-gradient(135deg, rgba(99,102,241,0.3), rgba(99,102,241,0.05));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; letter-spacing: -0.03em;
       line-height: 1; margin-bottom: 20px;
     }
-    .process-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.2rem; font-weight: 600; margin-bottom: 12px;
+    .section-sub {
+      font-size: 1rem; color: var(--gray-400);
+      max-width: 480px; line-height: 1.6;
     }
-    .process-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
-
-    /* === TESTIMONIALS === */
-    .testimonials-section { padding: 0 0 100px; }
-    .testimonials-grid {
+    .services-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: var(--border);
-      border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1px solid var(--gray-900);
     }
-    .testimonial-card {
-      background: var(--bg-card); padding: 32px;
+    .service-card {
+      padding: 40px 32px;
+      border-right: 1px solid var(--gray-900);
+      border-bottom: 1px solid var(--gray-900);
       transition: background 0.3s;
     }
-    .testimonial-card:hover { background: var(--bg-card-hover); }
-    .testimonial-stars { color: #f59e0b; font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 2px; }
-    .testimonial-text {
-      font-size: 0.9rem; color: var(--text-secondary);
-      line-height: 1.7; margin-bottom: 20px;
-      font-style: italic;
+    .service-card:nth-child(3n) { border-right: none; }
+    .service-card:nth-child(n+4) { border-bottom: none; }
+    .service-card:hover { background: var(--gray-950); }
+    .service-num {
+      font-size: 0.65rem; font-weight: 700; color: var(--red);
+      letter-spacing: 0.1em; margin-bottom: 24px;
     }
-    .testimonial-author {
-      display: flex; align-items: center; gap: 12px;
+    .service-name {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;
+      letter-spacing: -0.01em;
     }
-    .testimonial-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--cyan));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 600; font-size: 0.85rem;
-    }
-    .testimonial-name { font-size: 0.85rem; font-weight: 600; }
-    .testimonial-role { font-size: 0.7rem; color: var(--text-muted); }
-    .testimonial-result {
-      margin-top: 16px; padding: 8px 12px; border-radius: 6px;
-      background: var(--green-glow); border: 1px solid rgba(34,197,94,0.15);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; color: var(--green);
+    .service-desc {
+      font-size: 0.85rem; color: var(--gray-500); line-height: 1.6;
     }
 
-    /* === CTA SECTION === */
-    .cta-section {
-      padding: 100px 0; text-align: center;
-      position: relative;
+    /* DASHBOARD */
+    .dashboard {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--gray-900);
     }
-    .cta-section::before {
-      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    .dash-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--gray-900);
     }
-    .cta-box {
-      max-width: 700px; margin: 0 auto;
-      padding: 60px 40px; border-radius: 20px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      position: relative; overflow: hidden;
+    .dash-left {
+      padding: 48px 40px;
+      border-right: 1px solid var(--gray-900);
+      display: flex; flex-direction: column; justify-content: center;
     }
-    .cta-box::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center, var(--accent-glow), transparent 70%);
-      opacity: 0.5;
+    .dash-right { padding: 40px; background: var(--gray-950); }
+    .dash-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-500);
+      margin-bottom: 16px;
     }
-    .cta-box > * { position: relative; }
+    .dash-stat {
+      font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .dash-stat-sub {
+      font-size: 0.85rem; color: var(--gray-500); margin-bottom: 32px;
+    }
+    .dash-bars {
+      display: flex; align-items: flex-end; gap: 4px; height: 100px;
+    }
+    .dash-bar {
+      flex: 1; background: var(--gray-800); border-radius: 1px;
+      transition: background 0.2s; min-height: 4px;
+    }
+    .dash-bar:hover { background: var(--red); }
+    .dash-bar.active { background: var(--white); }
+    .agent-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-900);
+    }
+    .agent-row:last-child { border-bottom: none; }
+    .agent-name-col { display: flex; align-items: center; gap: 12px; }
+    .agent-dot { width: 6px; height: 6px; background: var(--red); }
+    .agent-dot.live { background: #22c55e; }
+    .agent-n { font-size: 0.85rem; font-weight: 600; }
+    .agent-type { font-size: 0.7rem; color: var(--gray-500); }
+    .agent-stat { font-size: 0.85rem; font-weight: 700; text-align: right; }
+    .agent-stat-label { font-size: 0.65rem; color: var(--gray-500); text-align: right; }
+
+    /* PROCESS */
+    .process {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--gray-900);
+    }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--gray-900);
+    }
+    .step {
+      padding: 48px 36px;
+      border-right: 1px solid var(--gray-900);
+    }
+    .step:last-child { border-right: none; }
+    .step-num {
+      font-size: 4rem; font-weight: 900; color: var(--gray-900);
+      line-height: 1; margin-bottom: 28px;
+      letter-spacing: -0.04em;
+    }
+    .step-title {
+      font-size: 1.15rem; font-weight: 700; margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .step-desc {
+      font-size: 0.85rem; color: var(--gray-500); line-height: 1.6;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--gray-900);
+    }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--gray-900);
+    }
+    .testimonial {
+      padding: 40px 32px;
+      border-right: 1px solid var(--gray-900);
+      display: flex; flex-direction: column;
+    }
+    .testimonial:last-child { border-right: none; }
+    .t-quote {
+      font-size: 0.95rem; line-height: 1.7;
+      color: var(--gray-400); margin-bottom: 32px;
+      flex: 1;
+    }
+    .t-result {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--red); letter-spacing: 0.04em;
+      margin-bottom: 24px; text-transform: uppercase;
+    }
+    .t-author { border-top: 1px solid var(--gray-900); padding-top: 20px; }
+    .t-name { font-size: 0.85rem; font-weight: 700; }
+    .t-role { font-size: 0.75rem; color: var(--gray-500); margin-top: 2px; }
+
+    /* CTA */
+    .cta { padding: 120px 0; }
+    .cta-inner { max-width: 600px; }
     .cta-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1; margin-bottom: 20px;
     }
     .cta-desc {
-      font-size: 0.95rem; color: var(--text-secondary);
-      margin-bottom: 32px; line-height: 1.6;
+      font-size: 1rem; color: var(--gray-400);
+      line-height: 1.6; margin-bottom: 40px;
     }
-    .cta-form {
-      display: flex; gap: 12px; max-width: 480px; margin: 0 auto 16px;
-    }
+    .cta-form { display: flex; gap: 0; margin-bottom: 16px; }
     .cta-input {
-      flex: 1; padding: 14px 18px; border-radius: 10px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-      color: var(--text-primary); font-size: 0.9rem;
+      flex: 1; padding: 14px 18px; font-size: 0.85rem;
+      background: var(--gray-950); border: 1px solid var(--gray-800);
+      border-right: none; color: var(--white);
       font-family: 'Inter', sans-serif; outline: none;
-      transition: border-color 0.3s;
     }
-    .cta-input:focus { border-color: var(--accent); }
-    .cta-input::placeholder { color: var(--text-muted); }
-    .cta-fine {
-      font-size: 0.7rem; color: var(--text-muted);
-      font-family: 'JetBrains Mono', monospace;
+    .cta-input:focus { border-color: var(--gray-600); }
+    .cta-input::placeholder { color: var(--gray-600); }
+    .cta-submit {
+      padding: 14px 32px; font-size: 0.85rem; font-weight: 600;
+      background: var(--red); color: var(--white);
+      border: 1px solid var(--red); cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background 0.2s;
     }
+    .cta-submit:hover { background: var(--red-dark); }
+    .cta-fine { font-size: 0.7rem; color: var(--gray-600); }
 
-    /* === FOOTER === */
+    /* FOOTER */
     footer {
-      padding: 40px 0; border-top: 1px solid var(--border);
+      padding: 32px 0;
+      border-top: 1px solid var(--gray-900);
     }
     .footer-inner {
       display: flex; align-items: center; justify-content: space-between;
     }
-    .footer-text { font-size: 0.75rem; color: var(--text-muted); }
-    .footer-links { display: flex; gap: 24px; }
+    .footer-text { font-size: 0.7rem; color: var(--gray-600); }
+    .footer-links { display: flex; gap: 20px; }
     .footer-links a {
-      font-size: 0.75rem; color: var(--text-muted);
+      font-size: 0.7rem; color: var(--gray-600);
       text-decoration: none; transition: color 0.2s;
     }
-    .footer-links a:hover { color: var(--text-secondary); }
+    .footer-links a:hover { color: var(--gray-400); }
 
-    /* === ANIMATIONS === */
-    .fade-up {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-    /* === RESPONSIVE === */
-    @media (max-width: 1024px) {
-      .dash-card.span-8, .dash-card.span-4 { grid-column: span 6; }
-    }
-    @media (max-width: 768px) {
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-      .dashboard-grid { grid-template-columns: 1fr; }
-      .dash-card.span-8, .dash-card.span-4,
-      .dash-card.span-6, .dash-card.span-3 { grid-column: span 1; }
-      .process-grid { grid-template-columns: 1fr; }
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+      .number-item { border-bottom: 1px solid var(--gray-900); }
+      .number-item:nth-child(2n) { border-right: none; }
+      .number-item:nth-child(odd):not(:first-child) { padding-left: 0; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid var(--gray-900); }
+      .service-card:last-child { border-bottom: none; }
+      .dash-layout { grid-template-columns: 1fr; }
+      .dash-left { border-right: none; border-bottom: 1px solid var(--gray-900); }
+      .process-steps { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--gray-900); }
+      .step:last-child { border-bottom: none; }
       .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonial { border-right: none; border-bottom: 1px solid var(--gray-900); }
+      .testimonial:last-child { border-bottom: none; }
+    }
+    @media (max-width: 600px) {
+      .numbers-grid { grid-template-columns: 1fr; }
+      .number-item { border-right: none; padding-left: 0 !important; }
+      .hero { padding: 120px 0 80px; }
+      h1 { font-size: 2.5rem; }
+      .nav-link { display: none; }
+      .hero-actions { flex-direction: column; }
       .cta-form { flex-direction: column; }
-      .hero { padding: 120px 0 60px; }
-      .nav-status { display: none; }
-      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .metrics-grid { grid-template-columns: 1fr; }
-      .hero-ctas { flex-direction: column; align-items: center; }
-    }
-
-    /* === FLOATING PARTICLES === */
-    .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .particle {
-      position: absolute; width: 2px; height: 2px;
-      background: var(--accent); border-radius: 50%;
-      opacity: 0; animation: float-up linear infinite;
-    }
-    @keyframes float-up {
-      0% { opacity: 0; transform: translateY(100vh) scale(0); }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.2; }
-      100% { opacity: 0; transform: translateY(-10vh) scale(1); }
-    }
-
-    /* === SCROLL PROGRESS === */
-    .scroll-progress {
-      position: fixed; top: 0; left: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--cyan));
-      z-index: 200; transition: width 0.1s;
+      .cta-input { border-right: 1px solid var(--gray-800); }
+      .footer-inner { flex-direction: column; gap: 12px; }
     }
   </style>
 </head>
 <body>
 
-<div class="scroll-progress" id="scrollProgress"></div>
-<div class="grid-bg"></div>
-<div class="particles" id="particles"></div>
-
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <div class="logo-icon">AI</div>
+    <a href="#" class="logo">
+      <div class="logo-mark">AI</div>
       AI Alliance
     </a>
-    <div class="nav-status">
-      <span class="pulse"></span>
-      ACCEPTING CLIENTS
+    <div class="nav-right">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#results" class="nav-link">Results</a>
+      <a href="#cta" class="nav-btn">Book a Call</a>
     </div>
-    <a href="#cta" class="nav-cta">Book a Call</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="fade-up">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        48-HOUR DEPLOYMENT GUARANTEE
-      </div>
-    </div>
-    <h1 class="fade-up">
-      We Build Your<br><span class="highlight">AI Layer</span> in 48 Hours
-    </h1>
-    <p class="hero-sub fade-up">
-      Custom AI agents deployed directly into your business operations. Automate workflows, eliminate bottlenecks, and scale without hiring.
-    </p>
-    <div class="hero-guarantee fade-up">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+    <div class="hero-eyebrow">48-Hour Deployment</div>
+    <h1>We build your<br><em>AI layer</em><br>in 48 hours.</h1>
+    <p class="hero-text">Custom AI agents deployed directly into your business. Automate workflows, eliminate bottlenecks, and scale — without hiring.</p>
+    <div class="hero-guarantee">
+      <span>&#10003;</span>
       If it doesn't save you at least 20 hrs/week — you don't pay.
     </div>
-    <div class="hero-ctas fade-up">
-      <a href="#cta" class="btn-primary">Get Your AI Layer &rarr;</a>
-      <a href="#dashboard" class="btn-secondary">See How It Works</a>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-fill">Get Started</a>
+      <a href="#services" class="btn-outline">See What We Build</a>
     </div>
   </div>
 </section>
 
-<!-- VSL -->
-<section class="vsl-section">
+<section class="vsl">
   <div class="container">
-    <div class="vsl-container fade-up">
-      <div class="vsl-header">
-        <span class="vsl-dot red"></span>
-        <span class="vsl-dot yellow"></span>
-        <span class="vsl-dot green"></span>
-        <span class="vsl-header-text">ai-alliance.com/demo</span>
-      </div>
-      <div class="vsl-placeholder" id="vslPlayer">
-        <div class="vsl-grid-overlay"></div>
-        <div class="vsl-play">
-          <svg fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-        <span class="vsl-label">[ WATCH THE DEMO ]</span>
+    <div class="vsl-frame" id="vslPlayer">
+      <div class="vsl-play">
+        <svg fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </div>
     </div>
   </div>
 </section>
 
-<!-- METRICS -->
-<section class="metrics">
+<section class="numbers">
   <div class="container">
-    <div class="metrics-grid fade-up">
-      <div class="metric-card">
-        <div class="metric-value" data-count="147">0</div>
-        <div class="metric-label">Businesses Automated</div>
+    <div class="numbers-grid">
+      <div class="number-item">
+        <div class="number-val">147<span class="accent">+</span></div>
+        <div class="number-label">Businesses Automated</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-value" data-count="20" data-suffix="+">0</div>
-        <div class="metric-label">Avg. Hours Saved / Week</div>
+      <div class="number-item">
+        <div class="number-val">20<span class="accent">h</span></div>
+        <div class="number-label">Avg. Hours Saved / Week</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-value" data-count="48" data-suffix="h">0</div>
-        <div class="metric-label">Deployment Time</div>
+      <div class="number-item">
+        <div class="number-val">48<span class="accent">h</span></div>
+        <div class="number-label">Deployment Time</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-value" data-count="97" data-suffix="%">0</div>
-        <div class="metric-label">Client Retention</div>
+      <div class="number-item">
+        <div class="number-val">97<span class="accent">%</span></div>
+        <div class="number-label">Client Retention</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- INTERACTIVE DASHBOARD -->
-<section class="dashboard-section" id="dashboard">
+<section class="services" id="services">
   <div class="container">
-    <div class="section-label fade-up">// YOUR AI COMMAND CENTER</div>
-    <div class="section-title fade-up">Every Agent. One Dashboard.</div>
-    <p class="section-desc fade-up">
-      We don't just build AI — we give you full visibility and control. Your custom dashboard tracks every agent, every task, every dollar saved.
-    </p>
+    <div class="section-header">
+      <div class="section-eyebrow">What We Build</div>
+      <div class="section-title">AI agents that<br>actually work.</div>
+      <p class="section-sub">Not chatbots. Not demos. Production-grade agents that plug into your existing tools and start delivering results on day one.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Lead Qualification</div>
+        <p class="service-desc">AI that scores, qualifies, and routes inbound leads in real-time. Responds instantly. Never sleeps.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Email &amp; Inbox</div>
+        <p class="service-desc">Triages your inbox, drafts responses, handles scheduling. Reclaim 3-4 hours every single day.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Customer Support</div>
+        <p class="service-desc">Handles 90% of support tickets instantly. Escalates the rest. Customers get answers in seconds, not hours.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-name">Sales Outreach</div>
+        <p class="service-desc">Personalized outreach at scale. AI researches prospects, writes tailored messages, and books meetings.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-name">Data &amp; Reporting</div>
+        <p class="service-desc">Pulls, cleans, and visualizes data from your tools automatically. Weekly reports generated without lifting a finger.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-name">Custom Workflows</div>
+        <p class="service-desc">Any repetitive process in your business — we build an agent for it. If a human does it repeatedly, AI can do it better.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="dashboard-grid fade-up">
-      <!-- Row 1 -->
-      <div class="dash-card span-8">
-        <div class="dash-card-header">
-          <span class="dash-card-title">Hours Saved This Month</span>
-          <span class="dash-card-status status-live">&#9679; LIVE</span>
-        </div>
-        <div class="chart-bars" id="animatedChart">
-          <div class="chart-bar" style="height:35%"></div>
-          <div class="chart-bar" style="height:55%"></div>
-          <div class="chart-bar" style="height:45%"></div>
-          <div class="chart-bar green" style="height:78%"></div>
-          <div class="chart-bar" style="height:62%"></div>
-          <div class="chart-bar" style="height:85%"></div>
-          <div class="chart-bar green" style="height:92%"></div>
-          <div class="chart-bar" style="height:70%"></div>
-          <div class="chart-bar" style="height:88%"></div>
-          <div class="chart-bar green" style="height:95%"></div>
-          <div class="chart-bar" style="height:75%"></div>
-          <div class="chart-bar" style="height:80%"></div>
-        </div>
-        <div class="terminal-line">
-          <span class="prompt">$</span> <span class="cmd">agents --status all</span><span class="cursor"></span>
+<section class="dashboard">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Full Visibility</div>
+      <div class="section-title">One dashboard.<br>Every agent.</div>
+      <p class="section-sub">See exactly what your AI is doing — tasks completed, hours saved, money recouped. Full control, full transparency.</p>
+    </div>
+    <div class="dash-layout">
+      <div class="dash-left">
+        <div class="dash-label">Hours Saved This Month</div>
+        <div class="dash-stat">127h</div>
+        <div class="dash-stat-sub">+23% vs. last month</div>
+        <div class="dash-bars">
+          <div class="dash-bar" style="height:30%"></div>
+          <div class="dash-bar" style="height:45%"></div>
+          <div class="dash-bar" style="height:38%"></div>
+          <div class="dash-bar" style="height:60%"></div>
+          <div class="dash-bar" style="height:52%"></div>
+          <div class="dash-bar" style="height:70%"></div>
+          <div class="dash-bar active" style="height:85%"></div>
+          <div class="dash-bar" style="height:65%"></div>
+          <div class="dash-bar" style="height:78%"></div>
+          <div class="dash-bar active" style="height:92%"></div>
+          <div class="dash-bar" style="height:72%"></div>
+          <div class="dash-bar" style="height:80%"></div>
         </div>
       </div>
-      <div class="dash-card span-4">
-        <div class="dash-card-header">
-          <span class="dash-card-title">Active Agents</span>
-          <span class="dash-card-status status-active">RUNNING</span>
-        </div>
-        <div class="agent-list">
-          <div class="agent-item">
-            <div class="agent-icon purple">&#9881;</div>
+      <div class="dash-right">
+        <div class="dash-label">Active Agents</div>
+        <div class="agent-row">
+          <div class="agent-name-col">
+            <div class="agent-dot live"></div>
             <div>
-              <div class="agent-name">Lead Qualifier</div>
-              <div class="agent-desc">Scoring inbound leads</div>
-            </div>
-            <div class="agent-right">
-              <div class="agent-metric">+340%</div>
-              <div class="agent-metric-label">conversion</div>
+              <div class="agent-n">Lead Qualifier</div>
+              <div class="agent-type">Scoring inbound</div>
             </div>
           </div>
-          <div class="agent-item">
-            <div class="agent-icon cyan">&#9993;</div>
+          <div>
+            <div class="agent-stat">+340%</div>
+            <div class="agent-stat-label">conversion</div>
+          </div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-name-col">
+            <div class="agent-dot live"></div>
             <div>
-              <div class="agent-name">Inbox Agent</div>
-              <div class="agent-desc">Email triage & reply</div>
-            </div>
-            <div class="agent-right">
-              <div class="agent-metric">8h saved</div>
-              <div class="agent-metric-label">per day</div>
+              <div class="agent-n">Inbox Agent</div>
+              <div class="agent-type">Email triage</div>
             </div>
           </div>
-          <div class="agent-item">
-            <div class="agent-icon green">&#9733;</div>
+          <div>
+            <div class="agent-stat">8h/day</div>
+            <div class="agent-stat-label">saved</div>
+          </div>
+        </div>
+        <div class="agent-row">
+          <div class="agent-name-col">
+            <div class="agent-dot live"></div>
             <div>
-              <div class="agent-name">Review Agent</div>
-              <div class="agent-desc">Reputation mgmt</div>
-            </div>
-            <div class="agent-right">
-              <div class="agent-metric">4.9&star;</div>
-              <div class="agent-metric-label">avg rating</div>
+              <div class="agent-n">Support Agent</div>
+              <div class="agent-type">Ticket resolution</div>
             </div>
           </div>
+          <div>
+            <div class="agent-stat">94%</div>
+            <div class="agent-stat-label">auto-resolved</div>
+          </div>
         </div>
-      </div>
-
-      <!-- Row 2 -->
-      <div class="dash-card span-3">
-        <div class="dash-card-header">
-          <span class="dash-card-title">Tasks Completed</span>
+        <div class="agent-row">
+          <div class="agent-name-col">
+            <div class="agent-dot"></div>
+            <div>
+              <div class="agent-n">Outreach Agent</div>
+              <div class="agent-type">Prospecting</div>
+            </div>
+          </div>
+          <div>
+            <div class="agent-stat">12 mtgs</div>
+            <div class="agent-stat-label">this week</div>
+          </div>
         </div>
-        <div class="mini-stat-value">12,847</div>
-        <div class="mini-stat-change">&#9650; 23% vs last month</div>
-      </div>
-      <div class="dash-card span-3">
-        <div class="dash-card-header">
-          <span class="dash-card-title">Cost Saved</span>
-        </div>
-        <div class="mini-stat-value">$34.2K</div>
-        <div class="mini-stat-change">&#9650; this quarter alone</div>
-      </div>
-      <div class="dash-card span-3">
-        <div class="dash-card-header">
-          <span class="dash-card-title">Uptime</span>
-        </div>
-        <div class="mini-stat-value">99.9%</div>
-        <div class="mini-stat-change">&#9679; all systems nominal</div>
-      </div>
-      <div class="dash-card span-3">
-        <div class="dash-card-header">
-          <span class="dash-card-title">Response Time</span>
-        </div>
-        <div class="mini-stat-value">&lt;2s</div>
-        <div class="mini-stat-change">&#9650; avg agent latency</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="process-section">
+<section class="process" id="process">
   <div class="container">
-    <div class="section-label fade-up">// HOW IT WORKS</div>
-    <div class="section-title fade-up">Three Steps. Full Automation.</div>
-    <p class="section-desc fade-up">
-      No long onboarding. No 6-month timelines. We move fast because your business can't afford to wait.
-    </p>
-    <div class="process-grid fade-up">
-      <div class="process-card">
-        <div class="process-number">01</div>
-        <div class="process-title">Discovery Call</div>
-        <p class="process-desc">We audit your current workflows, identify bottlenecks, and map out exactly which AI agents will give you the highest ROI.</p>
+    <div class="section-header">
+      <div class="section-eyebrow">How It Works</div>
+      <div class="section-title">Three steps.<br>Fully automated.</div>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Discovery</div>
+        <p class="step-desc">We audit your workflows, identify bottlenecks, and map out which agents will give you the highest ROI. 15-minute call.</p>
       </div>
-      <div class="process-card">
-        <div class="process-number">02</div>
-        <div class="process-title">48-Hour Build</div>
-        <p class="process-desc">Our team deploys custom AI agents directly into your existing tools — CRM, email, scheduling, support, and more. No disruption.</p>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Build</div>
+        <p class="step-desc">Our team deploys custom AI agents into your existing tools — CRM, email, scheduling, support. No disruption to your operations.</p>
       </div>
-      <div class="process-card">
-        <div class="process-number">03</div>
-        <div class="process-title">Launch & Scale</div>
-        <p class="process-desc">Your AI layer goes live. We monitor performance, optimize agents, and scale as your business grows. You get a dashboard to see it all.</p>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Scale</div>
+        <p class="step-desc">Your AI layer goes live. We monitor, optimize, and expand. You get a dashboard showing every task, every dollar saved.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
+<section class="testimonials" id="results">
   <div class="container">
-    <div class="section-label fade-up">// CLIENT RESULTS</div>
-    <div class="section-title fade-up">Real Businesses. Real Results.</div>
-    <p class="section-desc fade-up">
-      Don't take our word for it. Here's what happens when you plug AI into your operations.
-    </p>
-    <div class="testimonials-grid fade-up">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-text">"We were drowning in leads and couldn't follow up fast enough. AI Alliance built us a lead qualifier and auto-responder in two days. Our close rate jumped overnight."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">MR</div>
-          <div>
-            <div class="testimonial-name">Marcus Rivera</div>
-            <div class="testimonial-role">CEO, Rivera Consulting</div>
-          </div>
+    <div class="section-header">
+      <div class="section-eyebrow">Client Results</div>
+      <div class="section-title">Real businesses.<br>Real numbers.</div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <p class="t-quote">"We were drowning in leads and couldn't follow up fast enough. AI Alliance built us a lead qualifier and auto-responder in two days. Our close rate jumped overnight."</p>
+        <div class="t-result">Close rate: 12% &rarr; 34% in 30 days</div>
+        <div class="t-author">
+          <div class="t-name">Marcus Rivera</div>
+          <div class="t-role">CEO, Rivera Consulting</div>
         </div>
-        <div class="testimonial-result">&#9650; Close rate: 12% &rarr; 34% in 30 days</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-text">"I was spending 4 hours a day just on email and scheduling. Now my AI handles all of it. I literally got my mornings back. This is the best investment I've made."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">SK</div>
-          <div>
-            <div class="testimonial-name">Sarah Kim</div>
-            <div class="testimonial-role">Founder, Bloom Studio</div>
-          </div>
+      <div class="testimonial">
+        <p class="t-quote">"I was spending 4 hours a day on email and scheduling. Now my AI handles all of it. I got my mornings back. Best investment I've made this year."</p>
+        <div class="t-result">28 hrs/week saved on admin</div>
+        <div class="t-author">
+          <div class="t-name">Sarah Kim</div>
+          <div class="t-role">Founder, Bloom Studio</div>
         </div>
-        <div class="testimonial-result">&#9650; 28 hrs/week saved on admin tasks</div>
       </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testimonial-text">"We replaced two full-time support reps with an AI agent. It handles 90% of tickets instantly. Customers are happier and we cut costs by $8K/month."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">JT</div>
-          <div>
-            <div class="testimonial-name">James Torres</div>
-            <div class="testimonial-role">COO, NexGen Services</div>
-          </div>
+      <div class="testimonial">
+        <p class="t-quote">"We replaced two full-time support reps with an AI agent. It handles 90% of tickets instantly. Customers are happier and we cut costs by $8K/month."</p>
+        <div class="t-result">$8,000/mo saved on support</div>
+        <div class="t-author">
+          <div class="t-name">James Torres</div>
+          <div class="t-role">COO, NexGen Services</div>
         </div>
-        <div class="testimonial-result">&#9650; $8,000/mo saved on support costs</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section" id="cta">
+<section class="cta" id="cta">
   <div class="container">
-    <div class="cta-box fade-up">
-      <div class="section-label">// LIMITED AVAILABILITY</div>
-      <div class="cta-title">Ready to Deploy Your AI Layer?</div>
-      <p class="cta-desc">
-        We only take on 5 new clients per month to ensure quality. Book your discovery call now and get your AI agents running in 48 hours.
-      </p>
+    <div class="cta-inner">
+      <div class="section-eyebrow">Limited Availability</div>
+      <div class="cta-title">Ready to deploy<br>your AI layer?</div>
+      <p class="cta-desc">We take on 5 new clients per month. Book a discovery call and see what AI can do for your business in 48 hours.</p>
       <div class="cta-form">
-        <input type="email" class="cta-input" placeholder="Enter your email" id="ctaEmail">
-        <button class="btn-primary" onclick="handleCTA()">Book My Call &rarr;</button>
+        <input type="email" class="cta-input" placeholder="Your email" id="ctaEmail">
+        <button class="cta-submit" onclick="handleCTA()">Book My Call</button>
       </div>
       <p class="cta-fine">No commitment. 15-min call. See if we're a fit.</p>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-inner">
@@ -870,79 +682,9 @@
 </footer>
 
 <script>
-// === SCROLL PROGRESS ===
-window.addEventListener('scroll', () => {
-  const h = document.documentElement;
-  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
-  document.getElementById('scrollProgress').style.width = pct + '%';
-});
-
-// === FADE-UP OBSERVER ===
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// === COUNTER ANIMATION ===
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !e.target.dataset.animated) {
-      e.target.dataset.animated = 'true';
-      const target = parseInt(e.target.dataset.count);
-      const suffix = e.target.dataset.suffix || '';
-      const duration = 2000;
-      const start = performance.now();
-      const tick = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        e.target.textContent = Math.floor(target * eased) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    }
-  });
-}, { threshold: 0.5 });
-document.querySelectorAll('.metric-value').forEach(el => counterObserver.observe(el));
-
-// === PARTICLES ===
-(function createParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = (8 + Math.random() * 12) + 's';
-    p.style.animationDelay = Math.random() * 10 + 's';
-    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-    container.appendChild(p);
-  }
-})();
-
-// === CHART ANIMATION ===
-const chartObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !e.target.dataset.animated) {
-      e.target.dataset.animated = 'true';
-      const bars = e.target.querySelectorAll('.chart-bar');
-      bars.forEach((bar, i) => {
-        const h = bar.style.height;
-        bar.style.height = '0%';
-        bar.style.transition = `height 0.8s cubic-bezier(0.4,0,0.2,1) ${i * 0.05}s`;
-        requestAnimationFrame(() => { bar.style.height = h; });
-      });
-    }
-  });
-}, { threshold: 0.3 });
-const chart = document.getElementById('animatedChart');
-if (chart) chartObserver.observe(chart);
-
-// === CTA HANDLER ===
 function handleCTA() {
   const email = document.getElementById('ctaEmail').value;
-  if (email) {
-    // Replace with actual booking link
-    window.open('https://calendly.com', '_blank');
-  }
+  if (email) window.open('https://calendly.com', '_blank');
 }
 </script>
 
