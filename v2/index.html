@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Last Hire — Apply for Your AI C-Suite</title>
+  <meta name="description" content="Stop hiring five people to do what one intelligent system does better, faster, and around the clock. Custom AI agents deployed in 48 hours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       CSS CUSTOM PROPERTIES
+    ======================================== */
+    :root {
+      --bg-primary: #050505;
+      --bg-secondary: #0a0a0a;
+      --bg-card: #0f0f0f;
+      --bg-elevated: #141414;
+      --accent-green: #00d4b4;
+      --accent-green-dim: rgba(0, 212, 180, 0.12);
+      --accent-red: #ff4d4d;
+      --accent-red-dim: rgba(255, 77, 77, 0.12);
+      --accent-amber: #f0a500;
+      --accent-amber-dim: rgba(240, 165, 0, 0.12);
+      --accent-blue: #4db8ff;
+      --accent-blue-dim: rgba(77, 184, 255, 0.12);
+      --accent-purple: #6c63ff;
+      --text-primary: #f5f5f5;
+      --text-secondary: #888888;
+      --text-tertiary: #555555;
+      --text-muted: #333333;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-active: rgba(255, 255, 255, 0.15);
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ========================================
+       RESET & BASE
+    ======================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 9998;
+      pointer-events: none; opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 256px 256px;
+    }
+    body::before {
+      content: ''; position: fixed; top: 0; left: 0; right: 0;
+      height: 1px; z-index: 9999;
+      background: rgba(255,255,255,0.06);
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ========================================
+       LAYOUT
+    ======================================== */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .container-wide { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .divider {
+      height: 1px; background: var(--border-subtle);
+      margin: 0;
+    }
+
+    /* ========================================
+       BUTTONS
+    ======================================== */
+    .btn-apply {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 16px 48px; font-size: 0.95rem; font-weight: 700;
+      background: #fff; color: #000;
+      border: none; border-radius: 10px; cursor: pointer;
+      transition: all 0.2s; font-family: var(--font-sans);
+      letter-spacing: -0.01em;
+    }
+    .btn-apply:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,255,255,0.12);
+    }
+    .btn-apply-outline {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 36px; font-size: 0.85rem; font-weight: 600;
+      background: transparent; color: var(--text-primary);
+      border: 1px solid var(--border-active); border-radius: 10px;
+      cursor: pointer; transition: all 0.2s; font-family: var(--font-sans);
+    }
+    .btn-apply-outline:hover {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* ========================================
+       HERO / VSL SECTION
+    ======================================== */
+    .hero {
+      padding: 120px 24px 80px;
+      text-align: center;
+      position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      max-width: 680px; margin-left: auto; margin-right: auto;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--text-secondary);
+    }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 520px; margin: 0 auto 40px;
+    }
+    .hero-sub strong {
+      color: var(--text-primary); font-weight: 600;
+      text-decoration: underline; text-underline-offset: 3px;
+      text-decoration-color: rgba(255,255,255,0.3);
+    }
+
+    /* VSL Frame */
+    .vsl-frame {
+      width: 100%; max-width: 680px; margin: 0 auto 48px;
+      aspect-ratio: 16/9;
+      background: var(--bg-secondary);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+    }
+    .vsl-frame:hover {
+      border-color: var(--border-active);
+      box-shadow: 0 0 40px rgba(255,255,255,0.03);
+    }
+    .vsl-play {
+      width: 72px; height: 72px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .vsl-play svg { width: 20px; height: 20px; margin-left: 3px; fill: white; }
+    .vsl-frame:hover .vsl-play {
+      background: #fff; border-color: #fff;
+    }
+    .vsl-frame:hover .vsl-play svg { fill: #000; }
+
+    .hero-cta {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    /* ========================================
+       TOKEN EFFICIENCY SECTION
+    ======================================== */
+    .token-section {
+      padding: 100px 24px;
+      position: relative;
+    }
+    .token-header {
+      text-align: center; margin-bottom: 64px;
+    }
+    .token-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent-green);
+      margin-bottom: 16px;
+    }
+    .token-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .token-header-sub {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.7; max-width: 560px; margin: 0 auto;
+    }
+
+    /* Comparison bars */
+    .token-comparison {
+      max-width: 680px; margin: 0 auto 48px;
+    }
+    .token-bar-row {
+      display: grid;
+      grid-template-columns: 160px 1fr 80px;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .token-bar-label {
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .token-bar-label.is-ours {
+      color: var(--text-primary);
+    }
+    .token-bar-track {
+      height: 32px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .token-bar-fill {
+      position: absolute; top: 0; left: 0; bottom: 0;
+      border-radius: 6px;
+      display: flex; align-items: center; padding-left: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem; font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .token-bar-cost {
+      font-family: var(--font-mono);
+      font-size: 0.82rem; font-weight: 700;
+      text-align: right;
+    }
+    .token-bar-cost.is-high { color: var(--accent-red); }
+    .token-bar-cost.is-mid { color: var(--accent-amber); }
+    .token-bar-cost.is-low { color: var(--accent-green); }
+
+    /* Stats grid */
+    .token-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 680px; margin: 0 auto 48px;
+    }
+    .token-stat-card {
+      padding: 28px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .token-stat-card::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 1px;
+    }
+    .token-stat-val {
+      font-family: var(--font-mono);
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .token-stat-label {
+      font-size: 0.7rem; color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .token-stat-tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* How it works */
+    .token-how {
+      max-width: 680px; margin: 0 auto;
+      padding: 36px 0;
+    }
+    .token-how-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .pipeline {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+    }
+    .pipeline-node {
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem; font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .pipeline-node:hover {
+      border-color: var(--border-active);
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+    .pipeline-arrow {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0 6px;
+      font-family: var(--font-mono);
+    }
+
+    /* ========================================
+       WHAT YOU GET SECTION
+    ======================================== */
+    .what-section {
+      padding: 80px 24px;
+    }
+    .what-header {
+      text-align: center; margin-bottom: 48px;
+    }
+    .what-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+    .what-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 400; line-height: 1.1;
+    }
+    .what-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      max-width: 800px; margin: 0 auto 48px;
+    }
+    .what-card {
+      padding: 24px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .what-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-active);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+    .what-card-icon {
+      font-size: 1.4rem; margin-bottom: 12px;
+    }
+    .what-card-title {
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;
+    }
+    .what-card-sub {
+      font-size: 0.65rem; color: var(--text-secondary); line-height: 1.4;
+    }
+
+    /* ========================================
+       GUARANTEE
+    ======================================== */
+    .guarantee {
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .guarantee-inner {
+      max-width: 560px; margin: 0 auto;
+      padding: 32px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      background: var(--bg-card);
+    }
+    .guarantee-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px;
+      border: 1px solid rgba(0,212,180,0.2);
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem; font-weight: 700;
+      color: var(--accent-green);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .guarantee h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem; font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .guarantee p {
+      font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7;
+    }
+
+    /* ========================================
+       APPLICATION SECTION
+    ======================================== */
+    .apply-section {
+      padding: 100px 24px 120px;
+      position: relative;
+    }
+    .apply-section::before {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .apply-header {
+      text-align: center; margin-bottom: 48px;
+    }
+    .apply-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+    .apply-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .apply-header-sub {
+      font-size: 0.9rem; color: var(--text-secondary);
+      max-width: 480px; margin: 0 auto;
+    }
+
+    /* Application Form */
+    .apply-form {
+      max-width: 560px; margin: 0 auto;
+      position: relative;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      transition: all 0.2s;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: var(--border-active);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.03);
+    }
+    .form-input::placeholder {
+      color: var(--text-tertiary);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      transition: all 0.2s;
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%23555' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+    }
+    .form-select:focus {
+      border-color: var(--border-active);
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.03);
+    }
+    .form-select option {
+      background: var(--bg-card); color: var(--text-primary);
+    }
+    textarea.form-input {
+      resize: vertical; min-height: 100px;
+    }
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      font-size: 0.95rem; font-weight: 700;
+      background: #fff; color: #000;
+      border: none; border-radius: 10px;
+      cursor: pointer; font-family: var(--font-sans);
+      transition: all 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,255,255,0.12);
+    }
+    .form-note {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.7rem; color: var(--text-tertiary);
+    }
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+    footer {
+      padding: 32px 24px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .footer-inner {
+      max-width: 720px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-text { font-size: 0.65rem; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 0.65rem; color: var(--text-tertiary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ========================================
+       RESPONSIVE — TABLET
+    ======================================== */
+    @media (max-width: 768px) {
+      .hero { padding: 80px 20px 60px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-sub { font-size: 0.92rem; }
+      .vsl-frame { border-radius: 12px; }
+      .vsl-play { width: 56px; height: 56px; }
+      .vsl-play svg { width: 16px; height: 16px; }
+
+      .token-section { padding: 72px 20px; }
+      .token-bar-row { grid-template-columns: 120px 1fr 60px; gap: 10px; }
+      .token-bar-label { font-size: 0.72rem; }
+      .token-stats { grid-template-columns: 1fr; gap: 12px; }
+      .token-stat-card { padding: 20px 16px; }
+
+      .pipeline { gap: 0; }
+      .pipeline-node { font-size: 0.6rem; padding: 8px 10px; }
+      .pipeline-arrow { font-size: 0.65rem; padding: 0 3px; }
+
+      .what-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
+    }
+
+    /* ========================================
+       RESPONSIVE — MOBILE
+    ======================================== */
+    @media (max-width: 480px) {
+      .hero { padding: 64px 16px 48px; }
+      .hero h1 { font-size: 1.6rem; }
+      .hero-badge { font-size: 0.58rem; padding: 5px 12px; }
+      .hero-sub { font-size: 0.85rem; margin-bottom: 28px; }
+      .vsl-frame { border-radius: 10px; margin-bottom: 32px; }
+      .hero-cta { flex-direction: column; }
+      .btn-apply { width: 100%; padding: 14px 32px; font-size: 0.88rem; }
+      .btn-apply-outline { width: 100%; padding: 12px 28px; font-size: 0.82rem; }
+
+      .token-section { padding: 56px 16px; }
+      .token-header h2 { font-size: 1.7rem; }
+      .token-header-sub { font-size: 0.85rem; }
+      .token-bar-row { grid-template-columns: 100px 1fr 50px; gap: 8px; padding: 12px 0; }
+      .token-bar-label { font-size: 0.65rem; }
+      .token-bar-track { height: 24px; }
+      .token-bar-fill { font-size: 0.55rem; padding-left: 8px; }
+      .token-bar-cost { font-size: 0.7rem; }
+      .token-stat-val { font-size: 1.3rem; }
+
+      .pipeline-node { font-size: 0.55rem; padding: 6px 8px; }
+      .pipeline-arrow { font-size: 0.55rem; padding: 0 2px; }
+
+      .what-section { padding: 56px 16px; }
+      .what-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .what-card:nth-child(5) { grid-column: 1 / -1; }
+      .what-card { padding: 18px 12px; }
+      .what-card-icon { font-size: 1.2rem; }
+      .what-card-title { font-size: 0.78rem; }
+      .what-card-sub { font-size: 0.6rem; }
+
+      .guarantee { padding: 32px 16px; }
+      .guarantee-inner { padding: 24px 20px; }
+      .guarantee h3 { font-size: 1.3rem; }
+      .guarantee p { font-size: 0.75rem; }
+
+      .apply-section { padding: 56px 16px 80px; }
+      .apply-header h2 { font-size: 1.7rem; }
+      .apply-header-sub { font-size: 0.82rem; }
+    }
+
+    /* ========================================
+       REDUCED MOTION
+    ======================================== */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-badge-dot { animation: none; }
+      .token-bar-fill { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========================================
+     HERO / VSL
+======================================== -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Accepting applications
+  </div>
+  <h1>Your entire C-Suite,<br>replaced by <em>one system.</em></h1>
+  <p class="hero-sub">Five AI agents. Five departments. Deployed in 48 hours. If they don't save you 20+ hours/week, <strong>you don't pay.</strong></p>
+
+  <div class="vsl-frame" id="vslPlayer">
+    <div class="vsl-play">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <button class="btn-apply" onclick="document.getElementById('apply').scrollIntoView({behavior:'smooth'})">Apply Now &rarr;</button>
+    <button class="btn-apply-outline" onclick="document.getElementById('efficiency').scrollIntoView({behavior:'smooth'})">See the numbers</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========================================
+     TOKEN EFFICIENCY
+======================================== -->
+<section class="token-section" id="efficiency">
+  <div class="token-header">
+    <div class="token-eyebrow">// baseline tested</div>
+    <h2>3-4x more efficient<br>than calling any model directly</h2>
+    <p class="token-header-sub">We don't just wrap an API. Our orchestration layer routes, compresses, and chains context — using a fraction of the tokens competitors burn through.</p>
+  </div>
+
+  <!-- Comparison bars -->
+  <div class="token-comparison">
+    <div style="display:flex;justify-content:space-between;padding:0 0 12px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:8px;">
+      <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);letter-spacing:0.1em;">PROVIDER</span>
+      <div style="display:flex;gap:40px;">
+        <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);letter-spacing:0.1em;">AVG TOKENS / TASK</span>
+        <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-tertiary);letter-spacing:0.1em;width:80px;text-align:right;">COST</span>
+      </div>
+    </div>
+
+    <div class="token-bar-row">
+      <div class="token-bar-label">ChatGPT Direct</div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill" style="width:92%;background:rgba(255,77,77,0.2);">~48K tokens</div>
+      </div>
+      <div class="token-bar-cost is-high">$0.96</div>
+    </div>
+    <div class="token-bar-row">
+      <div class="token-bar-label">Claude Direct</div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill" style="width:78%;background:rgba(240,165,0,0.2);">~41K tokens</div>
+      </div>
+      <div class="token-bar-cost is-mid">$0.62</div>
+    </div>
+    <div class="token-bar-row">
+      <div class="token-bar-label">Gemini Direct</div>
+      <div class="token-bar-track">
+        <div class="token-bar-fill" style="width:70%;background:rgba(240,165,0,0.2);">~36K tokens</div>
+      </div>
+      <div class="token-bar-cost is-mid">$0.54</div>
+    </div>
+    <div class="token-bar-row" style="border-bottom:none;">
+      <div class="token-bar-label is-ours">YourLastHire</div>
+      <div class="token-bar-track" style="border:1px solid rgba(0,212,180,0.2);">
+        <div class="token-bar-fill" style="width:24%;background:rgba(0,212,180,0.25);">~12K tokens</div>
+      </div>
+      <div class="token-bar-cost is-low">$0.14</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="token-stats">
+    <div class="token-stat-card">
+      <div class="token-stat-val" style="color:var(--accent-green);">73%</div>
+      <div class="token-stat-label">Fewer tokens per task<br>vs. direct API calls</div>
+      <div class="token-stat-tag" style="background:var(--accent-green-dim);color:var(--accent-green);">Baseline verified</div>
+    </div>
+    <div class="token-stat-card">
+      <div class="token-stat-val" style="color:var(--accent-blue);">5</div>
+      <div class="token-stat-label">Autonomous agents<br>per deployment</div>
+      <div class="token-stat-tag" style="background:var(--accent-blue-dim);color:var(--accent-blue);">CMO COO CFO CEO CTO</div>
+    </div>
+    <div class="token-stat-card">
+      <div class="token-stat-val" style="color:var(--accent-amber);">48h</div>
+      <div class="token-stat-label">From onboarding<br>to live deployment</div>
+      <div class="token-stat-tag" style="background:var(--accent-amber-dim);color:var(--accent-amber);">Guaranteed</div>
+    </div>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="token-how">
+    <div class="token-how-label">Orchestration Pipeline</div>
+    <div class="pipeline">
+      <div class="pipeline-node">Intent</div>
+      <span class="pipeline-arrow">&rarr;</span>
+      <div class="pipeline-node">Context</div>
+      <span class="pipeline-arrow">&rarr;</span>
+      <div class="pipeline-node">Memory</div>
+      <span class="pipeline-arrow">&rarr;</span>
+      <div class="pipeline-node">Route</div>
+      <span class="pipeline-arrow">&rarr;</span>
+      <div class="pipeline-node">Execute</div>
+      <span class="pipeline-arrow">&rarr;</span>
+      <div class="pipeline-node">Reflect</div>
+      <span class="pipeline-arrow">&rarr;</span>
+      <div class="pipeline-node">Validate</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========================================
+     WHAT YOU GET
+======================================== -->
+<section class="what-section">
+  <div class="what-header">
+    <div class="what-eyebrow">What you get</div>
+    <h2>Five departments. One system.</h2>
+  </div>
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="what-card-icon">&#128225;</div>
+      <div class="what-card-title">CMO</div>
+      <div class="what-card-sub">Campaigns, content, brand voice</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">&#128176;</div>
+      <div class="what-card-title">CEO</div>
+      <div class="what-card-sub">Leads, outreach, pipeline</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">&#9881;</div>
+      <div class="what-card-title">COO</div>
+      <div class="what-card-sub">Workflows, scheduling, ops</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">&#128200;</div>
+      <div class="what-card-title">CFO</div>
+      <div class="what-card-sub">Cash flow, reconciliation, compliance</div>
+    </div>
+    <div class="what-card">
+      <div class="what-card-icon">&#128187;</div>
+      <div class="what-card-title">CTO</div>
+      <div class="what-card-sub">Code, bugs, docs, integrations</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========================================
+     GUARANTEE
+======================================== -->
+<section class="guarantee">
+  <div class="guarantee-inner">
+    <div class="guarantee-badge">&#10003; Guarantee</div>
+    <h3>20 hours saved, or you don't pay.</h3>
+    <p>If your AI layer doesn't save you at least 20 hours per week within the first 30 days, you pay nothing. No contracts. No fine print.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========================================
+     APPLICATION FORM
+======================================== -->
+<section class="apply-section" id="apply">
+  <div class="apply-header">
+    <div class="apply-eyebrow">// Limited capacity</div>
+    <h2>Apply for your AI C-Suite</h2>
+    <p class="apply-header-sub">We deploy manually to ensure quality. Capacity is limited. Apply below and we'll be in touch within 24 hours.</p>
+  </div>
+
+  <form class="apply-form" id="applicationForm" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">First name</label>
+        <input type="text" class="form-input" placeholder="Jane" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last name</label>
+        <input type="text" class="form-input" placeholder="Smith" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Work email</label>
+      <input type="email" class="form-input" placeholder="jane@company.com" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Company name</label>
+      <input type="text" class="form-input" placeholder="Acme Inc." required>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Company size</label>
+        <select class="form-select" required>
+          <option value="" disabled selected>Select</option>
+          <option>1-10 employees</option>
+          <option>11-50 employees</option>
+          <option>51-200 employees</option>
+          <option>201-1000 employees</option>
+          <option>1000+ employees</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Industry</label>
+        <select class="form-select" required>
+          <option value="" disabled selected>Select</option>
+          <option>SaaS / Tech</option>
+          <option>E-commerce</option>
+          <option>Agency / Services</option>
+          <option>Finance</option>
+          <option>Healthcare</option>
+          <option>Real Estate</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Which departments need the most help?</label>
+      <select class="form-select" required>
+        <option value="" disabled selected>Select primary department</option>
+        <option>Marketing (CMO)</option>
+        <option>Sales / Executive (CEO)</option>
+        <option>Operations (COO)</option>
+        <option>Finance (CFO)</option>
+        <option>Engineering (CTO)</option>
+        <option>All of the above</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">What's the biggest bottleneck in your business right now?</label>
+      <textarea class="form-input" placeholder="Tell us what's slowing you down..." rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="form-submit">Submit Application &rarr;</button>
+    <p class="form-note">We review every application manually. Expect a response within 24 hours.</p>
+  </form>
+</section>
+
+<!-- ========================================
+     FOOTER
+======================================== -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">&copy; 2026 Your Last Hire. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  const origText = btn.textContent;
+  btn.textContent = 'Submitting...';
+  btn.style.opacity = '0.6';
+  btn.disabled = true;
+
+  // Simulate submission — replace with real endpoint
+  setTimeout(() => {
+    btn.textContent = '✓ Application Received';
+    btn.style.background = '#00d4b4';
+    btn.style.color = '#000';
+    setTimeout(() => {
+      btn.textContent = origText;
+      btn.style.opacity = '1';
+      btn.style.background = '#fff';
+      btn.style.color = '#000';
+      btn.disabled = false;
+    }, 3000);
+  }, 1200);
+}
+</script>
+
+</body>
+</html>
