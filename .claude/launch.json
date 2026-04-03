@@ -4,7 +4,7 @@
     {
       "name": "ai-alliance",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "/Users/zainzitawi/Desktop/Projects/ai-alliance", "-l", "3002"],
+      "runtimeArgs": ["serve", "/Users/miniz/Desktop/ai-alliance", "-l", "3002"],
       "port": 3002
     }
   ]
