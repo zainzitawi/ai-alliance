@@ -87,23 +87,51 @@
        VSL SECTION (top of page)
     ======================================== */
     .vsl {
-      padding: 48px 40px 60px;
-      max-width: 960px; margin: 0 auto;
+      padding: 56px 32px 64px;
+      max-width: 880px; margin: 0 auto;
       text-align: center;
     }
     .vsl-label {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--text-secondary);
-      margin-bottom: 16px;
+      padding: 6px 14px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 100px;
+      margin-bottom: 28px;
     }
     .vsl-headline {
+      font-family: var(--font-sans);
+      font-size: clamp(2.2rem, 5.2vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      margin: 0 auto 22px;
+      max-width: 18ch;
+      color: var(--text-primary);
+    }
+    .vsl-headline em {
+      font-style: normal;
       font-family: var(--font-serif);
-      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-      font-weight: 400; margin-bottom: 8px;
-      line-height: 1.15;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
     }
     .vsl-sub {
-      font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 32px;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+    .vsl-sub strong {
+      color: var(--text-primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 2px;
     }
     .vsl-frame {
       width: 100%; aspect-ratio: 16/9;
@@ -980,8 +1008,8 @@
     ======================================== */
     @media (max-width: 1024px) {
       /* VSL */
-      .vsl { padding: 40px 24px 48px; }
-      .vsl-headline { font-size: 1.6rem; }
+      .vsl { padding: 48px 28px 56px; }
+      .vsl-headline { max-width: 16ch; }
 
       /* Dept intro */
       .dept-intro { padding: 60px 24px 48px; }
@@ -1028,8 +1056,10 @@
     ======================================== */
     @media (max-width: 768px) {
       /* VSL */
-      .vsl { padding: 36px 20px 40px; }
-      .vsl-headline { font-size: 1.4rem; }
+      .vsl { padding: 40px 22px 48px; }
+      .vsl-label { font-size: 0.6rem; padding: 5px 12px; margin-bottom: 22px; }
+      .vsl-headline { font-size: clamp(2rem, 7vw, 2.8rem); max-width: 14ch; line-height: 1.05; margin-bottom: 18px; }
+      .vsl-sub { font-size: 0.95rem; margin-bottom: 28px; }
 
       /* Dept intro */
       .dept-intro { padding: 48px 20px 40px; }
@@ -1075,10 +1105,10 @@
     ======================================== */
     @media (max-width: 480px) {
       /* VSL */
-      .vsl { padding: 28px 16px 32px; }
-      .vsl-headline { font-size: 1.15rem; }
-      .vsl-label { font-size: 0.55rem; margin-bottom: 10px; }
-      .vsl-sub { font-size: 0.8rem; margin-bottom: 20px; }
+      .vsl { padding: 32px 18px 40px; }
+      .vsl-label { font-size: 0.55rem; padding: 4px 11px; margin-bottom: 18px; letter-spacing: 0.2em; }
+      .vsl-headline { font-size: 2rem; line-height: 1.05; max-width: 14ch; margin-bottom: 16px; letter-spacing: -0.025em; }
+      .vsl-sub { font-size: 0.88rem; line-height: 1.5; margin-bottom: 24px; }
       .vsl-frame { border-radius: 10px; }
       .vsl-play { width: 56px; height: 56px; }
       .vsl-play svg { width: 16px; height: 16px; }
@@ -1200,8 +1230,8 @@
 ======================================== -->
 <section class="vsl" id="vsl">
   <div class="vsl-label">YOUR LAST HIRE</div>
-  <div class="vsl-headline">Give us 48 hours and we'll install a full AI C-Suite into your business</div>
-  <p class="vsl-sub">And if it can't replace your next or most previous hire, <span style="text-decoration:underline;text-underline-offset:3px;font-weight:600;color:var(--text-primary);">you don't pay</span> &#128071;</p>
+  <h1 class="vsl-headline">Give us 48 hours and we'll install a fully autonomous, <em>self&#8209;learning</em> AI agent into your business.</h1>
+  <p class="vsl-sub">And if it doesn't make your entire team at least <strong>5x more efficient</strong>, you don't pay.</p>
   <div class="vsl-frame" id="vslPlayer">
     <div class="vsl-play">
       <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
