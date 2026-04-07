@@ -142,51 +142,25 @@
       color: var(--text-tertiary);
       letter-spacing: 0.1em; text-transform: uppercase;
     }
-    .fullscreen-btn {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 12px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      color: var(--text-secondary);
-      font-family: var(--font-mono);
-      font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .fullscreen-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: var(--border-active);
-      color: var(--text-primary);
-    }
-    .fullscreen-btn svg {
-      width: 11px; height: 11px;
-    }
-
     .form-body {
-      height: 70vh;
-      min-height: 560px;
+      height: 78vh;
+      min-height: 640px;
       position: relative;
+      display: flex;
     }
-    .form-body > div {
-      height: 100% !important;
+    .form-body > div,
+    .form-body [data-tf-live] {
+      flex: 1 1 auto;
       width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
     }
     .form-body iframe {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 100% !important;
       border: none !important;
-    }
-
-    /* Fullscreen mode */
-    .form-shell:fullscreen,
-    .form-shell:-webkit-full-screen {
-      border-radius: 0;
-      border: none;
-      background: var(--bg-primary);
-    }
-    .form-shell:fullscreen .form-body,
-    .form-shell:-webkit-full-screen .form-body {
-      height: calc(100vh - 50px);
+      display: block;
     }
 
     /* Footer note */
@@ -207,7 +181,6 @@
       .apply-headline { font-size: clamp(2.4rem, 8vw, 3.4rem); max-width: 12ch; }
       .apply-sub { font-size: 0.95rem; margin-bottom: 40px; }
       .form-shell-header { padding: 12px 14px; }
-      .fullscreen-btn { padding: 5px 10px; font-size: 0.55rem; }
       .form-body { height: 75vh; min-height: 480px; }
     }
     @media (max-width: 480px) {
@@ -243,15 +216,7 @@
         <div class="form-shell-dot"></div>
       </div>
       <div class="form-shell-label">your-last-hire / application</div>
-      <button class="fullscreen-btn" onclick="goFullscreen()" id="fsBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
-          <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
-          <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
-          <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
-        </svg>
-        Fullscreen
-      </button>
+      <div></div>
     </div>
     <div class="form-body">
       <div data-tf-live="01KNK2YAVJ30JE764Y4E3RY6DE"></div>
@@ -262,25 +227,6 @@
 </main>
 
 <script src="//embed.typeform.com/next/embed.js"></script>
-<script>
-  function goFullscreen() {
-    const el = document.getElementById('formShell');
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      if (document.exitFullscreen) document.exitFullscreen();
-      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-    } else {
-      if (el.requestFullscreen) el.requestFullscreen();
-      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-    }
-  }
-  document.addEventListener('fullscreenchange', updateFsBtn);
-  document.addEventListener('webkitfullscreenchange', updateFsBtn);
-  function updateFsBtn() {
-    const btn = document.getElementById('fsBtn');
-    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
-    btn.lastChild.textContent = isFs ? ' Exit' : ' Fullscreen';
-  }
-</script>
 
 </body>
 </html>
