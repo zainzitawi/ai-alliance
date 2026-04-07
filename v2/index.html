@@ -430,6 +430,113 @@
     }
 
     /* ========================================
+       OBJECTIONS SECTION
+    ======================================== */
+    .obj-section {
+      padding: 96px 24px;
+      position: relative;
+    }
+    .obj-header {
+      max-width: 720px; margin: 0 auto 64px;
+      text-align: center;
+    }
+    .obj-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+    .obj-header h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+      font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+    .obj-header h2 em {
+      font-style: italic; color: var(--text-secondary);
+    }
+    .obj-header p {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.6; max-width: 540px; margin: 0 auto;
+    }
+    .obj-list {
+      max-width: 820px; margin: 0 auto;
+      display: flex; flex-direction: column;
+      gap: 14px;
+    }
+    .obj-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      background: var(--bg-card);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .obj-row:hover {
+      border-color: var(--border-active);
+      transform: translateY(-2px);
+    }
+    .obj-quote {
+      padding: 24px 28px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,0.01);
+    }
+    .obj-quote-num {
+      font-family: var(--font-mono);
+      font-size: 0.6rem; font-weight: 700;
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+      padding-top: 6px;
+      flex-shrink: 0;
+      min-width: 28px;
+    }
+    .obj-quote-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.15rem; line-height: 1.4;
+      color: var(--text-secondary);
+      letter-spacing: -0.005em;
+    }
+    .obj-answer {
+      padding: 22px 28px 26px 72px;
+      position: relative;
+    }
+    .obj-answer::before {
+      content: ''; position: absolute;
+      left: 44px; top: 28px; bottom: 32px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent-green), transparent);
+      opacity: 0.5;
+    }
+    .obj-answer-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent-green);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .obj-answer-label::before {
+      content: ''; width: 5px; height: 5px;
+      background: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+    .obj-answer-text {
+      font-size: 0.92rem; line-height: 1.65;
+      color: var(--text-primary);
+      letter-spacing: -0.005em;
+    }
+    .obj-answer-text strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ========================================
        APPLICATION SECTION
     ======================================== */
     .apply-section {
@@ -589,6 +696,14 @@
 
       .what-grid { grid-template-columns: repeat(3, 1fr); }
 
+      .obj-section { padding: 72px 20px; }
+      .obj-header { margin-bottom: 48px; }
+      .obj-quote { padding: 20px 22px 18px; gap: 14px; }
+      .obj-quote-text { font-size: 1.05rem; }
+      .obj-answer { padding: 20px 22px 22px 60px; }
+      .obj-answer::before { left: 36px; top: 24px; bottom: 28px; }
+      .obj-answer-text { font-size: 0.88rem; }
+
       .form-row { grid-template-columns: 1fr; }
 
       .footer-inner { flex-direction: column; gap: 10px; text-align: center; }
@@ -627,6 +742,20 @@
       .what-card-icon { font-size: 1.2rem; }
       .what-card-title { font-size: 0.78rem; }
       .what-card-sub { font-size: 0.6rem; }
+
+      .obj-section { padding: 56px 16px; }
+      .obj-header { margin-bottom: 36px; }
+      .obj-header h2 { font-size: 1.6rem; }
+      .obj-header p { font-size: 0.82rem; }
+      .obj-list { gap: 12px; }
+      .obj-row { border-radius: 12px; }
+      .obj-quote { padding: 18px 18px 16px; gap: 12px; }
+      .obj-quote-num { font-size: 0.55rem; min-width: 22px; padding-top: 4px; }
+      .obj-quote-text { font-size: 0.95rem; line-height: 1.35; }
+      .obj-answer { padding: 18px 18px 20px 50px; }
+      .obj-answer::before { left: 28px; top: 22px; bottom: 22px; }
+      .obj-answer-label { font-size: 0.52rem; margin-bottom: 6px; }
+      .obj-answer-text { font-size: 0.82rem; line-height: 1.6; }
 
       .guarantee { padding: 32px 16px; }
       .guarantee-inner { padding: 24px 20px; }
@@ -800,6 +929,66 @@
       <div class="what-card-title">CTO</div>
       <div class="what-card-sub">Code, bugs, docs, integrations</div>
     </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ========================================
+     OBJECTIONS
+======================================== -->
+<section class="obj-section">
+  <div class="obj-header">
+    <div class="obj-eyebrow">// Why most AI fails</div>
+    <h2>The objections we hear<br><em>and exactly how we answer them.</em></h2>
+    <p>Four reasons business owners hesitate. Four reasons we built this differently.</p>
+  </div>
+  <div class="obj-list">
+
+    <div class="obj-row">
+      <div class="obj-quote">
+        <div class="obj-quote-num">01</div>
+        <div class="obj-quote-text">"I've tried OpenClaw and it didn't really help us."</div>
+      </div>
+      <div class="obj-answer">
+        <div class="obj-answer-label">Our answer</div>
+        <div class="obj-answer-text">An OpenClaw setup pulled from the internet and an OpenClaw deployment with <strong>engineered vectoring, custom context bases, and real prompt design</strong> are completely different things. One is a toy. The other runs your business.</div>
+      </div>
+    </div>
+
+    <div class="obj-row">
+      <div class="obj-quote">
+        <div class="obj-quote-num">02</div>
+        <div class="obj-quote-text">"I don't have any technical skills."</div>
+      </div>
+      <div class="obj-answer">
+        <div class="obj-answer-label">Our answer</div>
+        <div class="obj-answer-text">You will never touch a terminal or a Mac mini. We handle <strong>configuration, deployment, and ongoing monitoring</strong> end-to-end. It plugs directly into the tools you already use.</div>
+      </div>
+    </div>
+
+    <div class="obj-row">
+      <div class="obj-quote">
+        <div class="obj-quote-num">03</div>
+        <div class="obj-quote-text">"What about my data and security?"</div>
+      </div>
+      <div class="obj-answer">
+        <div class="obj-answer-label">Our answer</div>
+        <div class="obj-answer-text">Our team is staffed by <strong>real cybersecurity professionals and engineers</strong>. We're not teenagers who learned Claude Code in their underwear three weeks ago. We've been building enterprise systems for years.</div>
+      </div>
+    </div>
+
+    <div class="obj-row">
+      <div class="obj-quote">
+        <div class="obj-quote-num">04</div>
+        <div class="obj-quote-text">"How do I know this will actually save me money?"</div>
+      </div>
+      <div class="obj-answer">
+        <div class="obj-answer-label">Our answer</div>
+        <div class="obj-answer-text">We guarantee it. <strong>If it doesn't, you don't pay.</strong> Proven across thousands of businesses. No contracts. No fine print.</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
