@@ -1043,7 +1043,19 @@
       font-size: 0.8rem;
     }
     .fd-lead-rank { color: var(--text-tertiary); font-weight: 700; width: 20px; }
-    .fd-lead-name { font-weight: 600; flex: 1; }
+    .fd-lead-name { font-weight: 600; flex: 1; display: flex; align-items: center; gap: 8px; }
+    .fd-lead-role {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255, 179, 71, 0.85);
+      padding: 3px 8px;
+      border: 1px solid rgba(255, 179, 71, 0.25);
+      border-radius: 4px;
+      background: rgba(255, 179, 71, 0.05);
+      text-transform: uppercase;
+    }
     .fd-lead-score { color: var(--text-tertiary); font-weight: 700; font-variant-numeric: tabular-nums; }
     .fd-lead-avatar {
       width: 28px; height: 28px; border-radius: 50%;
@@ -1521,18 +1533,29 @@
         <text x="150" y="33" text-anchor="middle" fill="#ffb347" font-size="14">&#9889;</text>
         <text x="150" y="66" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="10" font-weight="600">You</text>
 
-        <!-- Cortana -->
-        <circle cx="50" cy="180" r="18" fill="#0f0f0f" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-        <text x="50" y="185" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="Inter, sans-serif" font-size="11" font-weight="600">C</text>
-        <text x="50" y="214" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="Inter, sans-serif" font-size="9" font-weight="500">Cortana</text>
-        <!-- Bart -->
-        <circle cx="150" cy="180" r="18" fill="#0f0f0f" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-        <text x="150" y="185" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="Inter, sans-serif" font-size="11" font-weight="600">B</text>
-        <text x="150" y="214" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="Inter, sans-serif" font-size="9" font-weight="500">Bart</text>
-        <!-- Donna -->
-        <circle cx="250" cy="180" r="18" fill="#0f0f0f" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-        <text x="250" y="185" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="Inter, sans-serif" font-size="11" font-weight="600">D</text>
-        <text x="250" y="214" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-family="Inter, sans-serif" font-size="9" font-weight="500">Donna</text>
+        <!-- Task 1 (left branch) -->
+        <circle cx="50" cy="180" r="5" fill="#ffb347">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <foreignObject x="-10" y="195" width="120" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="org-task-label" data-slot="0" style="text-align:center;font-family:Inter,sans-serif;font-size:8.5px;font-weight:600;color:rgba(255,179,71,0.85);line-height:1.25;letter-spacing:0.02em;">Custom dashboard</div>
+        </foreignObject>
+
+        <!-- Task 2 (center branch) -->
+        <circle cx="150" cy="180" r="5" fill="#ffb347">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="0.4s"/>
+        </circle>
+        <foreignObject x="90" y="195" width="120" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="org-task-label" data-slot="1" style="text-align:center;font-family:Inter,sans-serif;font-size:8.5px;font-weight:600;color:rgba(255,179,71,0.85);line-height:1.25;letter-spacing:0.02em;">Scrape 50 competitors</div>
+        </foreignObject>
+
+        <!-- Task 3 (right branch) -->
+        <circle cx="250" cy="180" r="5" fill="#ffb347">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="0.8s"/>
+        </circle>
+        <foreignObject x="190" y="195" width="120" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="org-task-label" data-slot="2" style="text-align:center;font-family:Inter,sans-serif;font-size:8.5px;font-weight:600;color:rgba(255,179,71,0.85);line-height:1.25;letter-spacing:0.02em;">Custom proposals</div>
+        </foreignObject>
       </svg>
     </div>
 
@@ -1821,11 +1844,11 @@
         <div>
           <div class="fd-stat-label">TOP PERFORMERS</div>
           <div class="fd-leaderboard">
-            <div class="fd-lead-row"><span class="fd-lead-rank">1.</span><div class="fd-lead-avatar" style="background:rgba(255,179,71,0.15);border:1px solid rgba(255,179,71,0.3);">C</div><span class="fd-lead-name">Cortana</span><span class="fd-lead-score fd-counter" data-target="129">0</span></div>
-            <div class="fd-lead-row"><span class="fd-lead-rank">2.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">A</div><span class="fd-lead-name">Arthur</span><span class="fd-lead-score fd-counter" data-target="95">0</span></div>
-            <div class="fd-lead-row"><span class="fd-lead-rank">3.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">B</div><span class="fd-lead-name">Bart</span><span class="fd-lead-score fd-counter" data-target="94">0</span></div>
-            <div class="fd-lead-row"><span class="fd-lead-rank">4.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">J</div><span class="fd-lead-name">Jarvis</span><span class="fd-lead-score fd-counter" data-target="79">0</span></div>
-            <div class="fd-lead-row"><span class="fd-lead-rank">5.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">D</div><span class="fd-lead-name">Donna</span><span class="fd-lead-score fd-counter" data-target="69">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">1.</span><div class="fd-lead-avatar" style="background:rgba(255,179,71,0.15);border:1px solid rgba(255,179,71,0.3);">C</div><span class="fd-lead-name">Cortana <span class="fd-lead-role">CMO</span></span><span class="fd-lead-score fd-counter" data-target="129">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">2.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">A</div><span class="fd-lead-name">Arthur <span class="fd-lead-role">CEO</span></span><span class="fd-lead-score fd-counter" data-target="95">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">3.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">B</div><span class="fd-lead-name">Bart <span class="fd-lead-role">COO</span></span><span class="fd-lead-score fd-counter" data-target="94">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">4.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">J</div><span class="fd-lead-name">Jarvis <span class="fd-lead-role">CFO</span></span><span class="fd-lead-score fd-counter" data-target="79">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">5.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">D</div><span class="fd-lead-name">Donna <span class="fd-lead-role">CTO</span></span><span class="fd-lead-score fd-counter" data-target="69">0</span></div>
           </div>
         </div>
       </div>
@@ -1982,173 +2005,173 @@
       <button class="modal-tab" onclick="setModalTab(4)">CTO</button>
     </div>
 
-    <!-- Marketing agents -->
+    <!-- CMO agents -->
     <div class="modal-grid active" data-modal="0">
       <div class="modal-hero-card" style="background:linear-gradient(135deg,#f3e8ff,#e8d5ff);">
         <h3>Your CMO — without the salary.</h3>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#9889;</div>
-        <div class="modal-agent-name">Content Strategist</div>
-        <div class="modal-agent-desc">Plans and executes content calendars across all channels.</div>
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128640;</div>
+        <div class="modal-agent-name">Media Buyer</div>
+        <div class="modal-agent-desc">Launches, manages, and scales Meta + Google ad campaigns. Kills losers, doubles down on winners, rebalances budget in real time.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#9998;</div>
-        <div class="modal-agent-name">Copywriter</div>
-        <div class="modal-agent-desc">Creates tailored, on-brand posts for every channel.</div>
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128269;</div>
+        <div class="modal-agent-name">Competitor Intel</div>
+        <div class="modal-agent-desc">Scrapes 50+ competitor ad libraries, landing pages, and funnels daily. Extracts winning angles, hooks, and offers into a weekly report.</div>
       </div>
     </div>
     <div class="modal-bottom-row" data-modal-row="0">
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128200;</div>
-        <div class="modal-agent-name">SEO Analyst</div>
-        <div class="modal-agent-desc">Keyword research, traffic analysis, and automated reporting.</div>
-      </div>
-      <div class="modal-agent-card">
         <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#127912;</div>
-        <div class="modal-agent-name">Brand Voice Writer</div>
-        <div class="modal-agent-desc">Rewrites draft content to align with brand guidelines.</div>
+        <div class="modal-agent-name">Creative Generator</div>
+        <div class="modal-agent-desc">Generates static + UGC-style video ads from your winning concepts. Ships 20 new creative variations per week.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128232;</div>
-        <div class="modal-agent-name">Email Sequencer</div>
-        <div class="modal-agent-desc">Builds and optimizes automated email campaigns.</div>
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128202;</div>
+        <div class="modal-agent-name">Attribution Reporter</div>
+        <div class="modal-agent-desc">Real-time ROAS, cohort, and MER dashboards. Answers "which ad actually made us money this week" in one query.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128200;</div>
+        <div class="modal-agent-name">Funnel Architect</div>
+        <div class="modal-agent-desc">Builds complete funnels — landing pages, email sequences, retargeting — from a single brief.</div>
       </div>
     </div>
 
-    <!-- Sales agents -->
+    <!-- CEO agents -->
     <div class="modal-grid" data-modal="1">
       <div class="modal-hero-card" style="background:linear-gradient(135deg,#d5f5f0,#c0ece5);">
         <h3>Your CEO — without the equity.</h3>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128176;</div>
-        <div class="modal-agent-name">Lead Qualifier</div>
-        <div class="modal-agent-desc">Scores and segments inbound leads automatically.</div>
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128270;</div>
+        <div class="modal-agent-name">Pre-Call Intelligence</div>
+        <div class="modal-agent-desc">Shows up to every sales call knowing everything. LinkedIn history, recent news, mutual connections, past emails, pain points — compiled into a one-page brief.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#9993;</div>
-        <div class="modal-agent-name">Outreach Agent</div>
-        <div class="modal-agent-desc">Personalized multi-touch email and message campaigns.</div>
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#127919;</div>
+        <div class="modal-agent-name">Pipeline Strategist</div>
+        <div class="modal-agent-desc">Scores every open deal daily. Tells you which to push, which to drop, and where to spend your time for max revenue impact.</div>
       </div>
     </div>
     <div class="modal-bottom-row" data-modal-row="1" style="display:none;">
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128218;</div>
-        <div class="modal-agent-name">CRM Manager</div>
-        <div class="modal-agent-desc">Updates records, logs activity, flags hot prospects.</div>
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128231;</div>
+        <div class="modal-agent-name">Executive Assistant</div>
+        <div class="modal-agent-desc">Triages inbox, drafts replies in your voice, schedules meetings, sends prep docs 15 min before every call.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128172;</div>
-        <div class="modal-agent-name">Objection Handler</div>
-        <div class="modal-agent-desc">Trained responses to your most common pushbacks.</div>
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128259;</div>
+        <div class="modal-agent-name">Follow-Up Orchestrator</div>
+        <div class="modal-agent-desc">Perfectly-timed multi-touch sequences for every deal stage. Never lets a hot prospect cool off.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128197;</div>
-        <div class="modal-agent-name">Meeting Booker</div>
-        <div class="modal-agent-desc">Finds availability and books meetings with qualified leads.</div>
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128736;</div>
+        <div class="modal-agent-name">Strategy Copilot</div>
+        <div class="modal-agent-desc">Daily executive brief: pipeline movement, team blockers, KPI anomalies, and 3 decisions that need your attention.</div>
       </div>
     </div>
 
-    <!-- Operations agents -->
+    <!-- COO agents -->
     <div class="modal-grid" data-modal="2">
       <div class="modal-hero-card" style="background:linear-gradient(135deg,#ffe5e5,#ffd5d5);">
         <h3>Your COO — without the overhead.</h3>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128203;</div>
-        <div class="modal-agent-name">Status Reporter</div>
-        <div class="modal-agent-desc">Auto-generates progress summaries and flags blockers.</div>
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#9881;</div>
+        <div class="modal-agent-name">SOP Orchestrator</div>
+        <div class="modal-agent-desc">Turns your messy processes into bulletproof SOPs, then runs them — onboarding, fulfillment, QA, escalations — without human touch.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#9881;</div>
-        <div class="modal-agent-name">Project Manager</div>
-        <div class="modal-agent-desc">Captures goals and scope for clear project execution.</div>
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128101;</div>
+        <div class="modal-agent-name">Hiring Pipeline</div>
+        <div class="modal-agent-desc">Posts roles, screens applicants, runs first-round async interviews, schedules finalists. You only meet the top 3%.</div>
       </div>
     </div>
     <div class="modal-bottom-row" data-modal-row="2" style="display:none;">
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128101;</div>
-        <div class="modal-agent-name">StandUp Manager</div>
-        <div class="modal-agent-desc">Collects and shares team updates to keep everyone aligned.</div>
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128293;</div>
+        <div class="modal-agent-name">Bottleneck Hunter</div>
+        <div class="modal-agent-desc">Continuously audits every workflow. Finds bottlenecks, quantifies the cost, and proposes fixes before you notice them.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128293;</div>
-        <div class="modal-agent-name">Priorities Manager</div>
-        <div class="modal-agent-desc">Continuously manages priorities, escalating urgent tasks.</div>
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#9989;</div>
+        <div class="modal-agent-name">QA Auditor</div>
+        <div class="modal-agent-desc">Reviews every deliverable, client asset, and internal doc against your quality standards. Flags issues before they ship.</div>
       </div>
       <div class="modal-agent-card">
         <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128230;</div>
-        <div class="modal-agent-name">Vendor Coordinator</div>
-        <div class="modal-agent-desc">Manages supplier comms and procurement workflows.</div>
+        <div class="modal-agent-name">Vendor &amp; Contracts</div>
+        <div class="modal-agent-desc">Negotiates renewals, tracks contract terms, spots price creep, and manages all vendor comms end-to-end.</div>
       </div>
     </div>
 
-    <!-- Finance agents -->
+    <!-- CFO agents -->
     <div class="modal-grid" data-modal="3">
       <div class="modal-hero-card" style="background:linear-gradient(135deg,#fff3d5,#ffe8b5);">
         <h3>Your CFO — without the retainer.</h3>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128200;</div>
-        <div class="modal-agent-name">Cash Flow Monitor</div>
-        <div class="modal-agent-desc">Real-time tracking across accounts and categories.</div>
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128181;</div>
+        <div class="modal-agent-name">Full Bookkeeper</div>
+        <div class="modal-agent-desc">Categorizes every transaction across every account, every day. Month-end close in 12 minutes instead of 12 days.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128179;</div>
-        <div class="modal-agent-name">Expense Reconciler</div>
-        <div class="modal-agent-desc">Auto-matches receipts and flags discrepancies.</div>
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128200;</div>
+        <div class="modal-agent-name">Client Dashboards</div>
+        <div class="modal-agent-desc">Real-time P&amp;L, margin, and cash position dashboards — per client, per project, per offer. Login links sent weekly.</div>
       </div>
     </div>
     <div class="modal-bottom-row" data-modal-row="3" style="display:none;">
       <div class="modal-agent-card">
         <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128202;</div>
-        <div class="modal-agent-name">Forecaster</div>
-        <div class="modal-agent-desc">Scenario modeling and projection reports on demand.</div>
+        <div class="modal-agent-name">Forecasting Engine</div>
+        <div class="modal-agent-desc">Runs 6-month rolling cash flow forecasts with scenario modeling. Answers "can I afford to hire?" in seconds.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128274;</div>
-        <div class="modal-agent-name">Compliance Monitor</div>
-        <div class="modal-agent-desc">Flags potential issues before they escalate.</div>
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128231;</div>
+        <div class="modal-agent-name">AR &amp; Collections</div>
+        <div class="modal-agent-desc">Sends invoices, chases overdue accounts, escalates past 45 days. Recovers ~18% more on average.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128176;</div>
-        <div class="modal-agent-name">Invoice Processor</div>
-        <div class="modal-agent-desc">Processes, categorizes, and tracks all incoming invoices.</div>
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128196;</div>
+        <div class="modal-agent-name">Tax Prep Assistant</div>
+        <div class="modal-agent-desc">Organizes receipts, docs, and deductions year-round. Hands your accountant a zipped, ready-to-file package.</div>
       </div>
     </div>
 
-    <!-- Development agents -->
+    <!-- CTO agents -->
     <div class="modal-grid" data-modal="4">
       <div class="modal-hero-card" style="background:linear-gradient(135deg,#d5eeff,#c0e0ff);">
         <h3>Your CTO — without the standup.</h3>
       </div>
       <div class="modal-agent-card">
         <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128187;</div>
-        <div class="modal-agent-name">Code Generator</div>
-        <div class="modal-agent-desc">Feature development across your entire stack.</div>
+        <div class="modal-agent-name">Full-Stack Engineer</div>
+        <div class="modal-agent-desc">Ships production-ready features end-to-end — schema, API, UI, tests, migrations — from a plain-English spec.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128027;</div>
-        <div class="modal-agent-name">Bug Hunter</div>
-        <div class="modal-agent-desc">Reviews code and flags issues before deployment.</div>
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128274;</div>
+        <div class="modal-agent-name">Security Auditor</div>
+        <div class="modal-agent-desc">Runs continuous dependency scans, SAST, and vulnerability patching. Locks down secrets, reviews IAM, flags exposure.</div>
       </div>
     </div>
     <div class="modal-bottom-row" data-modal-row="4" style="display:none;">
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128196;</div>
-        <div class="modal-agent-name">Doc Writer</div>
-        <div class="modal-agent-desc">Keeps technical docs updated automatically.</div>
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#9729;</div>
+        <div class="modal-agent-name">Infra Manager</div>
+        <div class="modal-agent-desc">Monitors AWS/Vercel/Supabase, auto-scales under load, rolls back bad deploys, and optimizes cloud spend monthly.</div>
       </div>
       <div class="modal-agent-card">
         <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128279;</div>
-        <div class="modal-agent-name">API Builder</div>
-        <div class="modal-agent-desc">Builds and maintains third-party connections.</div>
+        <div class="modal-agent-name">Integration Builder</div>
+        <div class="modal-agent-desc">Wires up any API, webhook, or internal tool. If it has docs, it can be integrated in under an hour.</div>
       </div>
       <div class="modal-agent-card">
-        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128640;</div>
-        <div class="modal-agent-name">Deploy Agent</div>
-        <div class="modal-agent-desc">CI/CD pipeline management and production deployments.</div>
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128064;</div>
+        <div class="modal-agent-name">Code Reviewer</div>
+        <div class="modal-agent-desc">Reviews every PR for quality, patterns, performance, and security. Suggests refactors before merge.</div>
       </div>
     </div>
   </div>
@@ -2225,6 +2248,57 @@ function setFeat(idx) {
   }, { threshold: 0.3 });
 
   document.querySelectorAll('.fd-counter, .fd-milestone').forEach(el => io.observe(el));
+})();
+
+// Org chart — cycle task labels across the 3 branches to look like live deployment
+(function() {
+  const TASKS = [
+    'Custom dashboard',
+    'Scrape 50 competitors',
+    'Custom proposals',
+    'Pre-call briefs',
+    'Ad creative batch',
+    'Client P&L report',
+    'Month-end close',
+    'Hire pipeline run',
+    'Competitor teardown',
+    'Attribution audit',
+    'Onboarding sequence',
+    'Security scan',
+  ];
+
+  const slots = document.querySelectorAll('.org-task-label');
+  if (!slots.length) return;
+
+  // Inject transition style once
+  const style = document.createElement('style');
+  style.textContent = '.org-task-label{transition:opacity 0.4s ease;}';
+  document.head.appendChild(style);
+
+  // Track which tasks are currently visible to avoid duplicates
+  let current = Array.from(slots).map(el => el.textContent.trim());
+
+  function pickNew(excluded) {
+    const pool = TASKS.filter(t => !excluded.includes(t));
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  let nextSlot = 0;
+  function cycle() {
+    const slot = slots[nextSlot];
+    const newTask = pickNew(current);
+    // Fade out
+    slot.style.opacity = '0';
+    setTimeout(() => {
+      slot.textContent = newTask;
+      current[nextSlot] = newTask;
+      slot.style.opacity = '1';
+    }, 400);
+    nextSlot = (nextSlot + 1) % slots.length;
+  }
+
+  // Cycle one slot every 2.2s (staggered so at any moment one slot is transitioning)
+  setInterval(cycle, 2200);
 })();
 </script>
 
