@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Last Hire — Five Departments. One AI Layer.</title>
+  <meta name="description" content="Stop hiring five people to do what one intelligent system does better, faster, and around the clock. Custom AI agents deployed in 48 hours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       CSS CUSTOM PROPERTIES
+    ======================================== */
+    :root {
+      --bg-primary: #050505;
+      --bg-secondary: #0a0a0a;
+      --bg-card: #0f0f0f;
+      --accent-primary: #ffffff;
+      --accent-secondary: #888888;
+      --accent-glow: rgba(255, 255, 255, 0.06);
+      --text-primary: #f5f5f5;
+      --text-secondary: #777777;
+      --text-tertiary: #444444;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-active: rgba(255, 255, 255, 0.15);
+      --card-glow: 0 0 30px rgba(255, 255, 255, 0.03);
+      --red: #c0392b;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+    }
+
+    /* ========================================
+       RESET & BASE
+    ======================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    /* Subtle noise texture overlay for premium feel */
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 9998;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+    a { color: inherit; text-decoration: none; }
+    /* Thin accent line at top */
+    body::before {
+      content: ''; position: fixed; top: 0; left: 0; right: 0;
+      height: 1px; z-index: 9999;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* NAV removed per user request */
+
+    /* ========================================
+       BUTTONS
+    ======================================== */
+    .btn-primary {
+      padding: 14px 36px; font-size: 0.85rem; font-weight: 600;
+      background: #fff; color: #000;
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: all 0.2s; font-family: var(--font-sans);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,255,255,0.1);
+    }
+    .btn-ghost {
+      padding: 14px 36px; font-size: 0.85rem; font-weight: 600;
+      background: transparent; color: var(--text-primary);
+      border: 1px solid var(--border-subtle); border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; font-family: var(--font-sans);
+    }
+    .btn-ghost:hover { border-color: var(--border-active); }
+
+    /* ========================================
+       VSL SECTION (top of page)
+    ======================================== */
+    .vsl {
+      padding: 64px 32px 56px;
+      max-width: 1040px; margin: 0 auto;
+      text-align: center;
+    }
+    .vsl-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.6rem, 6.2vw, 5.4rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.18;
+      margin: 0 auto 32px;
+      max-width: 26ch;
+      color: var(--text-primary);
+    }
+    .vsl-headline em {
+      font-style: italic;
+      font-family: var(--font-serif);
+      font-weight: 400;
+      background: linear-gradient(135deg, #ffd166 0%, #ff8a00 55%, #ff5c38 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      text-shadow: 0 0 40px rgba(255, 138, 0, 0.15);
+    }
+    .vsl-sub {
+      font-size: clamp(0.98rem, 1.6vw, 1.18rem);
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .vsl-sub strong {
+      color: var(--text-primary);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 2px;
+    }
+    /* Social proof — avatar cluster */
+    .social-proof {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 14px;
+      margin: 0 auto 44px;
+    }
+    .avatar-cluster {
+      display: flex; align-items: center;
+    }
+    .avatar-cluster .av {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-primary);
+      margin-left: -12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #1a1a1a;
+    }
+    .avatar-cluster .av:first-child { margin-left: 0; }
+    .av-1 { background-image: url('/profiles/profile1.png'); }
+    .av-2 { background-image: url('/profiles/profile2.png'); }
+    .av-3 { background-image: url('/profiles/profile3.png'); }
+    .av-4 { background-image: url('/profiles/profile4.png'); }
+    .av-5 { background-image: url('/profiles/profile5.png'); }
+    .av-6 { background-image: url('/profiles/profile6.png'); }
+    .av-7 { background-image: url('/profiles/profile7.png'); }
+    .av-8 { background-image: url('/profiles/profile8.png'); }
+    .av-9 { background-image: url('/profiles/profile9.png'); }
+    .social-proof-text {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .vsl-frame {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--bg-secondary);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      overflow: hidden;
+    }
+    .vsl-frame:hover {
+      border-color: var(--border-active);
+      box-shadow: 0 0 40px rgba(255,255,255,0.03);
+    }
+    .vsl-play {
+      width: 80px; height: 80px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .vsl-play svg { width: 22px; height: 22px; margin-left: 3px; fill: white; }
+    .vsl-frame:hover .vsl-play {
+      background: var(--accent-primary); border-color: var(--accent-primary);
+    }
+    .vsl-cta {
+      margin-top: 32px;
+    }
+    .vsl-cta .btn-primary {
+      padding: 16px 48px; font-size: 0.95rem; border-radius: 10px;
+    }
+
+    /* ========================================
+       DEPARTMENTS INTRO (between VSL and scroll)
+    ======================================== */
+    .dept-intro {
+      padding: 80px 40px 60px;
+      text-align: center;
+      position: relative;
+    }
+    .dept-intro::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dept-intro-eyebrow {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+    .dept-intro h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400; line-height: 1.05;
+      letter-spacing: -0.02em; margin-bottom: 20px;
+    }
+    .dept-intro h2 em {
+      font-style: italic; color: var(--text-secondary);
+    }
+    .dept-intro-sub {
+      font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);
+      max-width: 520px; margin: 0 auto;
+    }
+
+    /* ========================================
+       STICKY SCROLL SECTION
+    ======================================== */
+    .scroll-section {
+      position: relative;
+    }
+
+    /* The scroll track — 5 panels tall */
+    .scroll-track {
+      height: 500vh;
+      position: relative;
+    }
+
+    /* The pinned container */
+    .scroll-pinned {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .scroll-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 40px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 340px 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* ---- Left Column ---- */
+    .dept-left {
+      position: relative;
+      min-height: 400px;
+    }
+    .dept-panel {
+      position: absolute; top: 0; left: 0; right: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(24px);
+      pointer-events: none;
+    }
+    .dept-panel.active {
+      opacity: 1; visibility: visible; transform: translateY(0);
+      pointer-events: auto;
+      animation: panelIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dept-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .dept-name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .dept-tagline {
+      font-size: 0.9rem; font-style: italic; color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+    .dept-desc {
+      font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .dept-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 20px; font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 0.05em;
+      border: 1px solid;
+    }
+
+    /* ---- Center Column (Agent) ---- */
+    .agent-center {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center;
+    }
+    .agent-orb-wrap {
+      position: relative;
+      width: 140px; height: 140px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .agent-orb-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      transition: border-color 0.5s ease, box-shadow 0.5s ease;
+      animation: orbRingPulse 4s ease-in-out infinite;
+    }
+    @keyframes orbRingPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.06); opacity: 1; }
+    }
+    .agent-orb {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 2;
+      transition: border-color 0.5s ease, box-shadow 0.5s ease;
+    }
+    .agent-orb-letter {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+    /* Agent badge */
+    .agent-badge {
+      margin-top: 14px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      font-size: 0.75rem; font-weight: 600;
+      transition: all 0.5s ease;
+    }
+    .agent-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-primary);
+      transition: background 0.5s ease;
+    }
+
+    /* Progress indicator */
+    .scroll-progress {
+      position: absolute; right: 40px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 16px;
+      z-index: 10;
+    }
+    .progress-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--text-tertiary);
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    .progress-dot.active {
+      background: #fff;
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      transform: scale(1.4);
+    }
+
+    /* ---- Right Column ---- */
+    .capabilities-right {
+      position: relative;
+      min-height: 400px;
+    }
+    .cap-panel {
+      position: absolute; top: 0; left: 0; right: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(24px);
+      pointer-events: none;
+    }
+    .cap-panel.active {
+      opacity: 1; visibility: visible; transform: translateY(0);
+      pointer-events: auto;
+      animation: panelIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .cap-section-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+
+    /* Expandable capability pills */
+    .cap-pill {
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      margin-bottom: 6px;
+      transition: all 0.2s ease;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .cap-pill:hover {
+      border-color: var(--border-active);
+      box-shadow: 0 0 20px rgba(255,255,255,0.02);
+      transform: translateX(4px);
+    }
+    .cap-pill.expanded {
+      border-color: var(--border-active);
+    }
+    .cap-pill-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 14px;
+    }
+    .cap-pill-name {
+      font-size: 0.82rem; font-weight: 600;
+    }
+    .cap-pill-icon {
+      font-size: 0.85rem; color: var(--text-tertiary);
+      transition: transform 0.2s;
+    }
+    .cap-pill.expanded .cap-pill-icon { transform: rotate(45deg); }
+    .cap-pill-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+    .cap-pill.expanded .cap-pill-body {
+      max-height: 80px;
+    }
+    .cap-pill-desc {
+      padding: 0 16px 14px;
+      font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    /* Metrics */
+    .cap-metrics {
+      margin-top: 18px;
+    }
+    .metric-card {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+    .metric-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      background: rgba(108, 99, 255, 0.1);
+    }
+    .metric-val {
+      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
+    }
+    .metric-label {
+      font-size: 0.7rem; color: var(--text-secondary);
+    }
+
+    /* ========================================
+       ORG CHART / PROMPT SECTION
+    ======================================== */
+    .org-section {
+      padding: 120px 40px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .org-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .org-tree {
+      width: 100%; max-width: 360px;
+      display: flex; justify-content: center;
+    }
+    .org-svg {
+      width: 100%; height: auto;
+    }
+    /* Agent node */
+    .org-node {
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+    }
+    .org-avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      border: 2px solid;
+      position: relative;
+      z-index: 2;
+      background: var(--bg-card);
+    }
+    .org-avatar-sm {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      border: 2px solid;
+      background: var(--bg-card);
+      position: relative; z-index: 2;
+    }
+    .org-node-label {
+      margin-top: 8px;
+      padding: 4px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .org-node-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      display: inline-block; margin-right: 6px;
+    }
+    /* Tree layout rows */
+    .org-row {
+      display: flex; align-items: flex-start; justify-content: center;
+      gap: 40px;
+      position: relative;
+    }
+    .org-row::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 2px; height: 32px;
+      background: var(--border-subtle);
+    }
+    .org-branches {
+      position: relative;
+      display: flex; align-items: flex-start; justify-content: center;
+      gap: 60px;
+      padding-top: 32px;
+    }
+    .org-branches::before {
+      content: '';
+      position: absolute; top: 0;
+      left: calc(50% - 120px);
+      width: 240px; height: 2px;
+      background: rgba(108,99,255,0.2);
+    }
+    .org-branch-node {
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+    }
+    .org-branch-node::before {
+      content: '';
+      position: absolute; top: -32px;
+      width: 2px; height: 32px;
+      background: rgba(108,99,255,0.2);
+    }
+    .org-sub-branches {
+      position: relative;
+      display: flex; justify-content: center; gap: 80px;
+      padding-top: 32px;
+    }
+    .org-sub-branches::before {
+      content: '';
+      position: absolute; top: 0;
+      left: calc(50% - 140px);
+      width: 280px; height: 2px;
+      background: rgba(108,99,255,0.2);
+    }
+    .org-sub-node {
+      display: flex; flex-direction: column; align-items: center;
+      position: relative;
+    }
+    .org-sub-node::before {
+      content: '';
+      position: absolute; top: -32px;
+      width: 2px; height: 32px;
+      background: rgba(108,99,255,0.2);
+    }
+    /* Right side content */
+    .org-content {}
+    .org-eyebrow {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+    .org-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .org-desc {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 32px;
+      max-width: 420px;
+    }
+    .org-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; font-size: 0.85rem; font-weight: 600;
+      background: var(--text-primary); color: var(--bg-primary);
+      border: none; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-sans); transition: all 0.2s;
+    }
+    .org-cta:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* ========================================
+       SUMMARY SECTION
+    ======================================== */
+    .summary {
+      padding: 120px 40px;
+      text-align: center;
+    }
+    .summary h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400; margin-bottom: 60px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto 60px;
+    }
+    .summary-card {
+      padding: 32px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .summary-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .summary-card:hover::before { opacity: 1; }
+    .summary-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-active);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.03);
+    }
+    .summary-card-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .summary-card-name {
+      font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .summary-card-desc {
+      font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5;
+    }
+    .summary-tagline {
+      font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 40px;
+    }
+    .summary-tagline strong { color: var(--text-primary); font-weight: 700; }
+    .summary-cta .btn-primary {
+      padding: 18px 56px; font-size: 1rem; border-radius: 12px;
+    }
+
+    /* ========================================
+       EXPLORE AGENTS MODAL
+    ======================================== */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .modal-overlay.open { display: flex; opacity: 1; }
+    .modal-container {
+      width: 90vw; max-width: 1100px;
+      max-height: 85vh;
+      background: #fff; color: #111;
+      border-radius: 20px;
+      overflow-y: auto; position: relative;
+      padding: 60px 48px;
+      animation: modalIn 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #111; color: #fff; border: none;
+      font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .modal-close:hover { opacity: 0.8; }
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; color: #111; margin-bottom: 32px;
+      line-height: 1.1;
+    }
+    .modal-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px;
+    }
+    .modal-tab {
+      padding: 8px 20px; border-radius: 20px; font-size: 0.82rem;
+      font-weight: 600; border: 1.5px solid #ddd; background: #fff;
+      color: #555; cursor: pointer; transition: all 0.2s;
+      font-family: var(--font-sans);
+    }
+    .modal-tab:hover { border-color: #999; }
+    .modal-tab.active { background: #000; color: #fff; border-color: #000; }
+    .modal-grid { display: none; }
+    .modal-grid.active { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+    .modal-hero-card {
+      grid-row: 1 / 3;
+      border-radius: 16px; padding: 36px;
+      display: flex; align-items: flex-end;
+      min-height: 240px; position: relative; overflow: hidden;
+    }
+    .modal-hero-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem; font-weight: 400; color: #111;
+      line-height: 1.2; position: relative; z-index: 2;
+    }
+    .modal-agent-card {
+      padding: 24px;
+      background: #fff; border: 1.5px solid #eee;
+      border-radius: 16px; transition: all 0.2s;
+    }
+    .modal-agent-card:hover { border-color: #ccc; transform: translateY(-2px); }
+    .modal-agent-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      margin-bottom: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.9rem;
+    }
+    .modal-agent-name { font-size: 0.9rem; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .modal-agent-desc { font-size: 0.78rem; color: #666; line-height: 1.5; }
+    .modal-bottom-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-top: 16px;
+    }
+    /* ========================================
+       DO MORE SECTION
+    ======================================== */
+    .domore {
+      padding: 100px 40px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .domore-header {
+      max-width: 1100px; margin: 0 auto 60px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .domore-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 400; line-height: 1.05;
+    }
+    .domore-quote {
+      max-width: 360px; padding: 24px;
+      border-left: 2px solid var(--border-subtle);
+    }
+    .domore-quote p {
+      font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+      font-style: italic; margin-bottom: 12px;
+    }
+    .domore-quote cite {
+      font-size: 0.75rem; color: var(--text-tertiary); font-style: normal;
+      font-weight: 600;
+    }
+    .domore-showcase {
+      max-width: 1100px; margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      overflow: hidden;
+      display: grid; grid-template-columns: 320px 1fr;
+      min-height: 480px;
+    }
+    .domore-sidebar {
+      padding: 32px 0;
+      border-right: 1px solid var(--border-subtle);
+    }
+    .domore-sidebar-title {
+      font-size: 0.95rem; font-weight: 700; padding: 0 28px;
+      margin-bottom: 4px; line-height: 1.4;
+    }
+    .domore-sidebar-sub {
+      font-size: 0.78rem; color: var(--text-secondary);
+      padding: 0 28px; margin-bottom: 20px;
+    }
+    .domore-feat {
+      padding: 14px 28px; cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
+      transition: all 0.2s; color: var(--text-tertiary);
+      border-left: 3px solid transparent;
+    }
+    .domore-feat:hover { color: var(--text-secondary); background: rgba(255,255,255,0.02); }
+    .domore-feat.active {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.03);
+      border-left-color: #fff;
+    }
+    .domore-feat.active .domore-feat-desc { display: block; }
+    .domore-feat-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+    .domore-feat-label { font-size: 0.85rem; font-weight: 600; }
+    .domore-feat-desc {
+      display: none; font-size: 0.75rem; color: var(--text-secondary);
+      line-height: 1.5; margin-top: 6px; font-weight: 400;
+    }
+    .domore-preview {
+      padding: 32px; display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .domore-screen {
+      display: none;
+      width: 100%; height: 100%;
+    }
+    .domore-screen.active {
+      display: flex; flex-direction: column;
+      animation: fadeSlideIn 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Mock UI elements inside preview */
+    .mock-chat { width: 100%; }
+    .mock-msg {
+      display: flex; gap: 10px; margin-bottom: 16px;
+      animation: msgIn 0.4s ease forwards;
+      opacity: 0;
+    }
+    .mock-msg:nth-child(1) { animation-delay: 0.2s; }
+    .mock-msg:nth-child(2) { animation-delay: 0.6s; }
+    .mock-msg:nth-child(3) { animation-delay: 1s; }
+    @keyframes msgIn { to { opacity: 1; } }
+    .mock-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      flex-shrink: 0; display: flex; align-items: center;
+      justify-content: center; font-size: 0.7rem; font-weight: 700;
+    }
+    .mock-bubble {
+      padding: 12px 16px; border-radius: 12px;
+      font-size: 0.8rem; line-height: 1.5; max-width: 80%;
+    }
+    .mock-bubble-user { background: #1a1a1a; color: white; border: 1px solid rgba(255,255,255,0.1); }
+    .mock-bubble-agent { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-subtle); }
+    .mock-task {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 16px; background: var(--bg-secondary);
+      border: 1px solid var(--border-subtle); border-radius: 10px;
+      margin-bottom: 8px; font-size: 0.8rem;
+      animation: msgIn 0.4s ease forwards; opacity: 0;
+    }
+    .mock-task:nth-child(1) { animation-delay: 0.3s; }
+    .mock-task:nth-child(2) { animation-delay: 0.5s; }
+    .mock-task:nth-child(3) { animation-delay: 0.7s; }
+    .mock-task:nth-child(4) { animation-delay: 0.9s; }
+    .mock-status {
+      padding: 2px 8px; border-radius: 4px; font-size: 0.6rem;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .mock-status-progress { background: rgba(255,255,255,0.08); color: #ccc; }
+    .mock-status-review { background: rgba(240,165,0,0.2); color: #f0a500; }
+    .mock-status-done { background: rgba(0,212,180,0.2); color: var(--accent-secondary); }
+    .mock-calendar {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+      width: 100%;
+    }
+    .mock-cal-header { font-size: 0.65rem; font-weight: 700; color: var(--text-tertiary); text-align: center; padding: 8px 4px; }
+    .mock-cal-event {
+      padding: 6px 8px; border-radius: 6px; font-size: 0.65rem;
+      font-weight: 600; border-left: 3px solid;
+      animation: msgIn 0.3s ease forwards; opacity: 0;
+    }
+    .mock-cal-event:nth-child(odd) { animation-delay: 0.3s; }
+    .mock-cal-event:nth-child(even) { animation-delay: 0.5s; }
+    /* ========================================
+       FEATURES GRID (stacked dark)
+    ======================================== */
+    .features-deep {
+      border-top: 1px solid var(--border-subtle);
+    }
+    .features-deep-row {
+      display: grid; grid-template-columns: 1fr 2fr;
+      border-bottom: 1px solid var(--border-subtle);
+      min-height: 320px;
+    }
+    .features-deep-row:nth-child(even) { direction: rtl; }
+    .features-deep-row:nth-child(even) > * { direction: ltr; }
+    .fd-text {
+      padding: 48px 40px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .fd-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem; font-weight: 400; margin-bottom: 14px;
+    }
+    .fd-desc {
+      font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .fd-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border: 1px solid var(--border-subtle);
+      border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+      color: var(--text-primary); background: transparent;
+      cursor: pointer; transition: all 0.2s; font-family: var(--font-sans);
+      width: fit-content;
+    }
+    .fd-cta:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+    .fd-visual {
+      padding: 40px;
+      border-left: 1px solid var(--border-subtle);
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .features-deep-row:nth-child(even) .fd-visual {
+      border-left: none; border-right: 1px solid var(--border-subtle);
+    }
+    /* Hub-and-spoke integrations visual */
+    .hub-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      aspect-ratio: 1 / 1;
+    }
+    .hub-svg { width: 100%; height: 100%; display: block; }
+    .hub-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #1a1a1a 0%, #0a0a0a 100%);
+      border: 1px solid rgba(255,179,71,0.35);
+      box-shadow: 0 0 40px rgba(255,138,0,0.15), inset 0 0 20px rgba(255,138,0,0.05);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 3;
+    }
+    .hub-center::before {
+      content: '';
+      position: absolute; inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,179,71,0.3);
+      animation: hubPulse 2.8s ease-in-out infinite;
+    }
+    @keyframes hubPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+    .hub-center-icon {
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, #ffd166 0%, #ff8a00 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      z-index: 2;
+    }
+    .hub-node {
+      position: absolute;
+      width: 54px; height: 54px;
+      border-radius: 14px;
+      background: #0f0f0f;
+      border: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s;
+      z-index: 2;
+    }
+    .hub-node:hover {
+      border-color: rgba(255,179,71,0.4);
+      box-shadow: 0 0 20px rgba(255,138,0,0.15);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .hub-node-label {
+      position: absolute;
+      bottom: -18px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .hub-count {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 12px;
+      gap: 4px;
+    }
+    .hub-count-num {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      font-weight: 400;
+      line-height: 1;
+      background: linear-gradient(135deg, #ffd166 0%, #ff8a00 55%, #ff5c38 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .hub-count-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* Visual mock elements */
+    .fd-stat { font-size: 3rem; font-weight: 800; font-family: 'Courier New', monospace; letter-spacing: -0.03em; }
+    .fd-stat-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
+    .fd-bar-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; margin-top: 16px; }
+    .fd-bar { flex: 1; background: #fff; border-radius: 2px; min-height: 4px; opacity: 0.2; }
+    .fd-leaderboard { margin-top: 16px; }
+    .fd-lead-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+    }
+    .fd-lead-rank { color: var(--text-tertiary); font-weight: 700; width: 20px; }
+    .fd-lead-name { font-weight: 600; flex: 1; display: flex; align-items: center; gap: 8px; }
+    .fd-lead-role {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255, 179, 71, 0.85);
+      padding: 3px 8px;
+      border: 1px solid rgba(255, 179, 71, 0.25);
+      border-radius: 4px;
+      background: rgba(255, 179, 71, 0.05);
+      text-transform: uppercase;
+    }
+    .fd-lead-score { color: var(--text-tertiary); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .fd-lead-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700;
+    }
+    /* Interactive leaderboard row */
+    .fd-lead-row {
+      position: relative;
+      cursor: default;
+      transition: background 0.3s, padding 0.3s;
+      border-radius: 8px;
+    }
+    .fd-lead-row::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      background: linear-gradient(to right, rgba(255,179,71,0.06), rgba(255,138,0,0.02) 60%, transparent);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .fd-lead-row:hover::before { opacity: 1; }
+    .fd-lead-row:hover {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .fd-lead-row:hover .fd-lead-score {
+      color: var(--text-primary);
+    }
+
+    /* Animated bar chart */
+    .fd-bar-chart .fd-bar {
+      transition: opacity 0.4s, transform 0.4s;
+      transform-origin: bottom;
+      opacity: 0.25;
+    }
+    .fd-bar-chart:hover .fd-bar { opacity: 0.35; }
+    .fd-bar-chart .fd-bar:hover {
+      opacity: 1 !important;
+      background: linear-gradient(to top, #ff8a00, #ffd166) !important;
+      transform: scaleY(1.06);
+    }
+
+    /* Milestone progress bars */
+    .fd-milestone {
+      position: relative;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.75rem;
+      transition: padding 0.3s;
+    }
+    .fd-milestone-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px;
+    }
+    .fd-milestone-label { color: var(--text-secondary); }
+    .fd-milestone-val { color: var(--text-tertiary); font-family: 'Courier New', monospace; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .fd-milestone-bar {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .fd-milestone-fill {
+      height: 100%;
+      background: linear-gradient(to right, #ff8a00, #ffd166);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fd-milestone.in-view .fd-milestone-fill { transform: scaleX(var(--fill, 0.5)); }
+    .fd-milestone.complete .fd-milestone-label { color: rgba(255,179,71,0.8); }
+
+    /* Animated stat counter */
+    .fd-stat.animating { transition: color 0.3s; }
+    .fd-stat {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Pulsing "agents online" dot */
+    .fd-online-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ffb347;
+      box-shadow: 0 0 8px rgba(255, 179, 71, 0.6);
+      margin-right: 6px;
+      animation: onlinePulse 2s ease-in-out infinite;
+    }
+    @keyframes onlinePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    /* Bottom features grid */
+    .fd-grid-bottom {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .fd-grid-card {
+      padding: 36px 28px;
+      border-right: 1px solid var(--border-subtle);
+      transition: background 0.2s;
+    }
+    .fd-grid-card:nth-child(3n) { border-right: none; }
+    .fd-grid-card:hover { background: rgba(255,255,255,0.02); }
+    .fd-grid-icon { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 14px; }
+    .fd-grid-name { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .fd-grid-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ========================================
+       GUARANTEE STRIP
+    ======================================== */
+    .guarantee {
+      padding: 60px 40px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+    .guarantee-inner {
+      max-width: 600px; margin: 0 auto;
+    }
+    .guarantee-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 24px; font-size: 0.7rem; font-weight: 700;
+      color: var(--text-secondary); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .guarantee h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem; font-weight: 400; margin-bottom: 12px;
+    }
+    .guarantee p {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;
+    }
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+    footer {
+      padding: 40px;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-text { font-size: 0.7rem; color: var(--text-tertiary); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.7rem; color: var(--text-tertiary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ========================================
+       DEPARTMENT ACCENT COLORS
+    ======================================== */
+    .dept-marketing { --dept-color: #6c63ff; }
+    .dept-sales { --dept-color: #00d4b4; }
+    .dept-operations { --dept-color: #ff6b6b; }
+    .dept-finance { --dept-color: #f0a500; }
+    .dept-development { --dept-color: #4db8ff; }
+
+    /* ========================================
+       RESPONSIVE — TABLET (≤1024px)
+    ======================================== */
+    @media (max-width: 1024px) {
+      /* VSL */
+      .vsl { padding: 56px 28px 48px; }
+      .vsl-headline { max-width: 20ch; }
+
+      /* Dept intro */
+      .dept-intro { padding: 60px 24px 48px; }
+      .dept-intro h2 { font-size: 2.8rem; }
+      .dept-intro::before { width: 400px; height: 400px; }
+
+      /* Scroll section: stack vertically */
+      .scroll-pinned { align-items: flex-start; padding-top: 24px; overflow-y: auto; }
+      .scroll-inner {
+        display: flex !important; flex-direction: column;
+        align-items: center; gap: 20px; padding: 0 24px;
+      }
+      .agent-center { order: -1; width: 100%; }
+      .agent-orb-wrap { width: 120px; height: 120px; }
+      .agent-orb { width: 64px; height: 64px; }
+      .agent-orb-letter { font-size: 1.5rem; }
+      .agent-badge { margin-top: 12px; }
+      .dept-left { min-height: auto; position: relative; width: 100%; text-align: center; }
+      .capabilities-right { min-height: auto; position: relative; width: 100%; }
+      .dept-panel, .cap-panel { position: relative; display: none; animation: none; }
+      .dept-panel.active, .cap-panel.active { display: block; opacity: 1; visibility: visible; transform: none; }
+      .scroll-progress { display: none; }
+
+      /* Org chart */
+      .org-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+      .org-content { order: -1; }
+      .org-desc { margin: 0 auto 32px; }
+      .org-section { padding: 80px 24px; }
+      .org-tree { margin: 0 auto; max-width: 300px; }
+
+      /* Summary */
+      .summary { padding: 80px 24px; }
+      .summary-grid { grid-template-columns: repeat(3, 1fr); }
+
+      /* Guarantee */
+      .guarantee { padding: 48px 24px; }
+
+      /* Footer */
+      footer { padding: 32px 24px; }
+    }
+
+    /* ========================================
+       RESPONSIVE — SMALL TABLET (≤768px)
+    ======================================== */
+    @media (max-width: 768px) {
+      /* VSL */
+      .vsl { padding: 48px 22px 40px; }
+      .vsl-headline { font-size: clamp(2rem, 6.6vw, 3rem); max-width: 22ch; line-height: 1.08; margin-bottom: 18px; }
+      .vsl-sub { font-size: 0.95rem; margin-bottom: 26px; }
+      .avatar-cluster .av { width: 34px; height: 34px; margin-left: -9px; }
+      .social-proof { margin-bottom: 36px; gap: 12px; }
+      .social-proof-text { font-size: 0.8rem; }
+
+      /* Dept intro */
+      .dept-intro { padding: 48px 20px 40px; }
+      .dept-intro h2 { font-size: 2.2rem; }
+
+      /* Domore */
+      .domore { padding: 60px 20px; }
+      .domore-header { flex-direction: column; }
+      .domore-quote { border-left: none; border-top: 1px solid var(--border-subtle); padding: 20px 0 0; max-width: 100%; }
+      .domore-showcase { grid-template-columns: 1fr; }
+      .domore-sidebar { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+
+      /* Features deep */
+      .features-deep-row { grid-template-columns: 1fr; }
+      .features-deep-row:nth-child(even) { direction: ltr; }
+      .fd-visual { border-left: none !important; border-right: none !important; border-top: 1px solid var(--border-subtle); }
+      .fd-text { padding: 32px 24px; }
+      .fd-visual { padding: 24px; }
+      .fd-grid-bottom { grid-template-columns: 1fr; }
+      .fd-grid-card { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+
+      /* Modal */
+      .modal-container { padding: 40px 24px; width: 95vw; }
+      .modal-grid.active { grid-template-columns: 1fr; }
+      .modal-bottom-row { grid-template-columns: 1fr; }
+      .modal-title { font-size: 1.8rem; }
+
+      /* Summary */
+      .summary { padding: 60px 20px; }
+      .summary h2 { font-size: 2rem; margin-bottom: 40px; }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+      /* Guarantee */
+      .guarantee { padding: 40px 20px; }
+      .guarantee h3 { font-size: 1.5rem; }
+
+      /* Footer */
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ========================================
+       RESPONSIVE — MOBILE (≤480px)
+    ======================================== */
+    @media (max-width: 480px) {
+      /* VSL */
+      .vsl { padding: 40px 18px 32px; }
+      .vsl-headline { font-size: 1.95rem; line-height: 1.1; max-width: 100%; margin-bottom: 16px; letter-spacing: -0.015em; padding: 0 4px; }
+      .vsl-sub { font-size: 0.9rem; line-height: 1.5; margin-bottom: 24px; max-width: 100%; padding: 0 8px; }
+      .avatar-cluster .av { width: 30px; height: 30px; margin-left: -8px; border-width: 2px; }
+      .social-proof { margin-bottom: 32px; gap: 10px; }
+      .social-proof-text { font-size: 0.75rem; }
+      .vsl-frame { border-radius: 10px; }
+      .vsl-play { width: 56px; height: 56px; }
+      .vsl-play svg { width: 16px; height: 16px; }
+      .vsl-cta .btn-primary { padding: 12px 32px; font-size: 0.82rem; }
+
+      /* Dept intro */
+      .dept-intro { padding: 36px 16px 32px; }
+      .dept-intro h2 { font-size: 1.75rem; }
+      .dept-intro-sub { font-size: 0.85rem; }
+      .dept-intro::before { width: 280px; height: 280px; }
+
+      /* Scroll section */
+      .scroll-track { height: 500vh; }
+      .scroll-pinned { padding-top: 12px; }
+      .scroll-inner { gap: 12px; padding: 0 16px; }
+      .agent-orb-wrap { width: 100px; height: 100px; }
+      .agent-orb { width: 56px; height: 56px; }
+      .agent-orb-letter { font-size: 1.3rem; }
+      .agent-badge { margin-top: 10px; font-size: 0.65rem; padding: 5px 12px; }
+      .dept-left, .capabilities-right { text-align: center; }
+      .dept-name { font-size: 1.4rem; }
+      .dept-tagline { font-size: 0.8rem; }
+      .dept-desc { font-size: 0.75rem; }
+      .dept-label { font-size: 0.5rem; }
+      .dept-pill { font-size: 0.6rem; padding: 5px 10px; }
+      .cap-section-label { font-size: 0.5rem; }
+      .cap-pill-header { padding: 10px 12px; }
+      .cap-pill-name { font-size: 0.75rem; }
+      .cap-pill-icon { font-size: 0.75rem; }
+      .cap-metrics { margin-top: 14px; }
+      .metric-card { padding: 10px 12px; }
+      .metric-icon { width: 32px; height: 32px; font-size: 0.85rem; border-radius: 8px; }
+      .metric-val { font-size: 0.85rem; }
+      .metric-label { font-size: 0.6rem; }
+
+      /* Org chart */
+      .org-section { padding: 48px 16px; }
+      .org-tree { max-width: 260px; }
+      .org-title { font-size: 1.6rem; }
+      .org-desc { font-size: 0.85rem; }
+      .org-cta { padding: 12px 24px; font-size: 0.8rem; }
+
+      /* Domore */
+      .domore { padding: 48px 16px; }
+      .domore-title { font-size: 1.8rem; }
+      .domore-sidebar-title { font-size: 0.85rem; padding: 0 20px; }
+      .domore-sidebar-sub { padding: 0 20px; }
+      .domore-feat { padding: 12px 20px; }
+      .domore-feat-label { font-size: 0.8rem; }
+      .domore-preview { padding: 20px; }
+      .mock-bubble { font-size: 0.72rem; max-width: 90%; }
+      .mock-avatar { width: 26px; height: 26px; font-size: 0.6rem; }
+      .mock-task { font-size: 0.72rem; padding: 10px 12px; }
+      .mock-cal-header { font-size: 0.55rem; padding: 4px 2px; }
+      .mock-cal-event { font-size: 0.55rem; padding: 4px 6px; }
+
+      /* Features deep */
+      .fd-title { font-size: 1.3rem; }
+      .fd-desc { font-size: 0.78rem; }
+      .fd-cta { font-size: 0.7rem; padding: 8px 16px; }
+      .fd-stat { font-size: 2rem; }
+      .fd-stat-label { font-size: 0.55rem; }
+      .fd-lead-row { font-size: 0.72rem; padding: 8px 0; }
+      .fd-lead-avatar { width: 22px; height: 22px; font-size: 0.5rem; }
+      .fd-grid-card { padding: 24px 20px; }
+      .fd-grid-name { font-size: 0.82rem; }
+      .fd-grid-desc { font-size: 0.7rem; }
+
+      /* Summary */
+      .summary { padding: 48px 16px; }
+      .summary h2 { font-size: 1.5rem; margin-bottom: 32px; }
+      .summary-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .summary-card { padding: 18px 12px; border-radius: 10px; }
+      .summary-card-icon { width: 36px; height: 36px; border-radius: 8px; margin-bottom: 10px; font-size: 1rem; }
+      .summary-card-name { font-size: 0.8rem; }
+      .summary-card-desc { font-size: 0.65rem; }
+      .summary-tagline { font-size: 0.85rem; }
+      .summary-cta .btn-primary { padding: 12px 36px; font-size: 0.85rem; }
+
+      /* Guarantee */
+      .guarantee { padding: 36px 16px; }
+      .guarantee-badge { font-size: 0.6rem; padding: 6px 14px; }
+      .guarantee h3 { font-size: 1.2rem; }
+      .guarantee p { font-size: 0.75rem; }
+
+      /* Modal */
+      .modal-container { padding: 32px 16px; }
+      .modal-title { font-size: 1.5rem; margin-bottom: 24px; }
+      .modal-tabs { gap: 6px; margin-bottom: 24px; }
+      .modal-tab { padding: 6px 14px; font-size: 0.72rem; }
+      .modal-close { width: 36px; height: 36px; top: 12px; right: 12px; font-size: 1rem; }
+      .modal-hero-card { min-height: 160px; padding: 24px; }
+      .modal-hero-card h3 { font-size: 1.2rem; }
+      .modal-agent-card { padding: 18px; }
+      .modal-agent-name { font-size: 0.82rem; }
+      .modal-agent-desc { font-size: 0.7rem; }
+
+      /* Footer */
+      footer { padding: 24px 16px; }
+      .footer-text { font-size: 0.6rem; }
+      .footer-links a { font-size: 0.6rem; }
+    }
+
+    /* ========================================
+       REDUCED MOTION
+    ======================================== */
+    @media (prefers-reduced-motion: reduce) {
+      .agent-orb-ring { animation: none; }
+      .dept-panel, .cap-panel { transition: none; animation: none; }
+      .cap-pill-body { transition: none; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ========================================
+     VSL SECTION (top of page)
+======================================== -->
+<section class="vsl" id="vsl">
+  <h1 class="vsl-headline">Give us just <em>72&nbsp;hours</em> and we'll install a fully autonomous, self&#8209;learning <em>team</em> of AI agents into your business.</h1>
+  <p class="vsl-sub">And if it doesn't make your entire team at least <strong>5x more efficient</strong>, you don't pay.</p>
+  <div class="social-proof">
+    <div class="avatar-cluster">
+      <div class="av av-1"></div>
+      <div class="av av-2"></div>
+      <div class="av av-3"></div>
+      <div class="av av-4"></div>
+      <div class="av av-5"></div>
+      <div class="av av-6"></div>
+      <div class="av av-7"></div>
+      <div class="av av-8"></div>
+      <div class="av av-9"></div>
+    </div>
+    <div class="social-proof-text">Join 500+ businesses already scaling with AI</div>
+  </div>
+  <div class="vsl-frame" id="vslPlayer">
+    <div class="vsl-play">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+  </div>
+  <div class="vsl-cta">
+    <button class="btn-primary" onclick="window.location.href='/apply'">Deploy your agent now &rarr;</button>
+  </div>
+</section>
+
+<!-- ========================================
+     ORG CHART / ONE PROMPT SECTION
+======================================== -->
+<section class="org-section">
+  <div class="org-inner">
+    <!-- Left: Org tree diagram with animated pulses flowing down branches -->
+    <div class="org-tree">
+      <svg class="org-svg" viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Radial gradient for the pulse dot -->
+          <radialGradient id="pulseGrad">
+            <stop offset="0%" stop-color="#ffb347" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#ff8a00" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#ff5c38" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Branch paths (hidden, only used for animateMotion) -->
+          <path id="pathToC" d="M 150 50 L 150 110 L 50 110 L 50 160" />
+          <path id="pathToB" d="M 150 50 L 150 160" />
+          <path id="pathToD" d="M 150 50 L 150 110 L 250 110 L 250 160" />
+        </defs>
+
+        <!-- Static tree lines -->
+        <line x1="150" y1="44" x2="150" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="50" y1="110" x2="250" y2="110" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="50" y1="110" x2="50" y2="160" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="150" y1="110" x2="150" y2="160" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="250" y1="110" x2="250" y2="160" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+        <!-- Animated pulse dots — one per branch, staggered start -->
+        <circle r="6" fill="url(#pulseGrad)">
+          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0s">
+            <mpath href="#pathToC"/>
+          </animateMotion>
+        </circle>
+        <circle r="6" fill="url(#pulseGrad)">
+          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.4s">
+            <mpath href="#pathToB"/>
+          </animateMotion>
+        </circle>
+        <circle r="6" fill="url(#pulseGrad)">
+          <animateMotion dur="2.6s" repeatCount="indefinite" begin="0.8s">
+            <mpath href="#pathToD"/>
+          </animateMotion>
+        </circle>
+
+        <!-- You node (on top of animation so pulse disappears behind it) -->
+        <circle cx="150" cy="28" r="22" fill="#0f0f0f" stroke="rgba(255,180,70,0.35)" stroke-width="1.5"/>
+        <circle cx="150" cy="28" r="22" fill="none" stroke="#ffb347" stroke-width="1" opacity="0.6">
+          <animate attributeName="r" values="22;26;22" dur="2.6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;0;0.6" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+        <text x="150" y="33" text-anchor="middle" fill="#ffb347" font-size="14">&#9889;</text>
+        <text x="150" y="66" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="10" font-weight="600">You</text>
+
+        <!-- Task 1 (left branch) -->
+        <circle cx="50" cy="180" r="5" fill="#ffb347">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <foreignObject x="-10" y="195" width="120" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="org-task-label" data-slot="0" style="text-align:center;font-family:Inter,sans-serif;font-size:8.5px;font-weight:600;color:rgba(255,179,71,0.85);line-height:1.25;letter-spacing:0.02em;">Custom dashboard</div>
+        </foreignObject>
+
+        <!-- Task 2 (center branch) -->
+        <circle cx="150" cy="180" r="5" fill="#ffb347">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="0.4s"/>
+        </circle>
+        <foreignObject x="90" y="195" width="120" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="org-task-label" data-slot="1" style="text-align:center;font-family:Inter,sans-serif;font-size:8.5px;font-weight:600;color:rgba(255,179,71,0.85);line-height:1.25;letter-spacing:0.02em;">Scrape 50 competitors</div>
+        </foreignObject>
+
+        <!-- Task 3 (right branch) -->
+        <circle cx="250" cy="180" r="5" fill="#ffb347">
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" begin="0.8s"/>
+        </circle>
+        <foreignObject x="190" y="195" width="120" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="org-task-label" data-slot="2" style="text-align:center;font-family:Inter,sans-serif;font-size:8.5px;font-weight:600;color:rgba(255,179,71,0.85);line-height:1.25;letter-spacing:0.02em;">Custom proposals</div>
+        </foreignObject>
+      </svg>
+    </div>
+
+    <!-- Right: Content -->
+    <div class="org-content">
+      <div class="org-eyebrow">AGENTS IN MINUTES</div>
+      <div class="org-title">One prompt spins up<br>an entire team</div>
+      <p class="org-desc">Your goals, workflows, and frustrations — automatically delegated to your AI C-Suite. One instruction. Every division activated.</p>
+      <button class="org-cta" onclick="openModal()">Explore all agents</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     DO MORE THAN HUMANLY POSSIBLE
+======================================== -->
+<section class="domore" style="padding:100px 40px;">
+  <div style="text-align:center;max-width:720px;margin:0 auto 64px;">
+    <div style="font-family:var(--font-serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:400;line-height:1.1;margin-bottom:18px;">Do more than humanly possible.</div>
+    <p style="font-size:1rem;color:var(--text-secondary);line-height:1.6;">Your agents handle the complex work across every department — so you can focus on growing the business.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;margin:0 auto;">
+    <div style="padding:32px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;">
+      <div style="font-size:1.2rem;margin-bottom:12px;">&#128269;</div>
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:6px;">Sales Intelligence</div>
+      <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">Show up to every call knowing everything. Pre-call briefs built in seconds from LinkedIn, email history, and news.</div>
+    </div>
+    <div style="padding:32px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;">
+      <div style="font-size:1.2rem;margin-bottom:12px;">&#128200;</div>
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:6px;">Autonomous Ads</div>
+      <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">Scrape competitors, generate winning creative, launch and manage campaigns across Meta and Google — 24/7.</div>
+    </div>
+    <div style="padding:32px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;">
+      <div style="font-size:1.2rem;margin-bottom:12px;">&#128181;</div>
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:6px;">Finance on Autopilot</div>
+      <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">Real-time P&amp;L dashboards, automated bookkeeping, invoice collections, and month-end close in minutes.</div>
+    </div>
+    <div style="padding:32px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;">
+      <div style="font-size:1.2rem;margin-bottom:12px;">&#9881;</div>
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:6px;">Ops Without Overhead</div>
+      <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">SOPs executed without human touch. Hiring pipeline, vendor management, and quality control — all automated.</div>
+    </div>
+    <div style="padding:32px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;">
+      <div style="font-size:1.2rem;margin-bottom:12px;">&#128640;</div>
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:6px;">Ship Code On Command</div>
+      <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">Plain-English specs become production features — schema, API, UI, tests, deploy — in a single async pass.</div>
+    </div>
+    <div style="padding:32px 24px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:14px;">
+      <div style="font-size:1.2rem;margin-bottom:12px;">&#128274;</div>
+      <div style="font-size:0.9rem;font-weight:700;margin-bottom:6px;">Enterprise Security</div>
+      <div style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;">Continuous vulnerability scans, dependency patching, data isolation, and scoped permissions. Built by real engineers.</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:48px;">
+    <button class="btn-primary" onclick="window.location.href='/apply'">Deploy your agent now &rarr;</button>
+  </div>
+</section>
+
+<!-- REMOVED: old domore-showcase with interactive previews (kept on main site only) -->
+<!-- START OLD DOMORE
+    <div class="domore-sidebar">
+      <div class="domore-sidebar-title">The only agents that work like humans — with infinite skills</div>
+      <div class="domore-sidebar-sub" style="margin-top:4px;">Click to explore each capability</div>
+      <div style="margin-top:12px;">
+        <div class="domore-feat active" data-feat="0" onclick="setFeat(0)">
+          <span class="domore-feat-icon">&#128269;</span>
+          <div>
+            <div class="domore-feat-label">Pre-Call Intelligence</div>
+            <div class="domore-feat-desc">Walk into every sales call knowing everything about them. LinkedIn, news, past emails, mutual connections, likely objections — briefed in seconds.</div>
+          </div>
+        </div>
+        <div class="domore-feat" data-feat="1" onclick="setFeat(1)">
+          <span class="domore-feat-icon">&#128200;</span>
+          <div>
+            <div class="domore-feat-label">Scrape &amp; Teardown</div>
+            <div class="domore-feat-desc">Scrapes 50 competitors overnight — ads, landing pages, offers, pricing — and ships a winning concept deck by morning.</div>
+          </div>
+        </div>
+        <div class="domore-feat" data-feat="2" onclick="setFeat(2)">
+          <span class="domore-feat-icon">&#127922;</span>
+          <div>
+            <div class="domore-feat-label">Autonomous Media Buying</div>
+            <div class="domore-feat-desc">Scales winning ads, kills losers, rebalances budgets in real time across Meta, Google, and TikTok. 24/7, no human touch.</div>
+          </div>
+        </div>
+        <div class="domore-feat" data-feat="3" onclick="setFeat(3)">
+          <span class="domore-feat-icon">&#128181;</span>
+          <div>
+            <div class="domore-feat-label">Live Client P&amp;L</div>
+            <div class="domore-feat-desc">Real-time financial dashboards per client, per project, per offer. Month-end close in 12 minutes instead of 12 days.</div>
+          </div>
+        </div>
+        <div class="domore-feat" data-feat="4" onclick="setFeat(4)">
+          <span class="domore-feat-icon">&#128640;</span>
+          <div>
+            <div class="domore-feat-label">Ship Code On Command</div>
+            <div class="domore-feat-desc">Write a plain-English spec. Get a production-ready feature — schema, API, UI, tests, deploy — in a single async pass.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="domore-preview">
+      <!-- Screen 0: Pre-Call Intelligence -->
+      <div class="domore-screen active" data-feat="0">
+        <div style="width:100%;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:0.6rem;color:rgba(255,179,71,0.85);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">PRE-CALL BRIEF</div>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);font-family:'JetBrains Mono',monospace;">14:00 — SARAH CHEN / ACME CO</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;">
+              <div style="font-size:0.55rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-bottom:4px;">COMPANY</div>
+              <div style="font-size:0.78rem;font-weight:700;margin-bottom:2px;">Acme Co &middot; 85 employees</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);">Series B &middot; $18M raised</div>
+            </div>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;">
+              <div style="font-size:0.55rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-bottom:4px;">DECISION MAKER</div>
+              <div style="font-size:0.78rem;font-weight:700;margin-bottom:2px;">Sarah Chen &middot; VP Ops</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);">ex-Stripe &middot; Stanford '16</div>
+            </div>
+          </div>
+
+          <div style="padding:12px 14px;background:rgba(255,179,71,0.04);border:1px solid rgba(255,179,71,0.18);border-radius:10px;margin-bottom:10px;">
+            <div style="font-size:0.55rem;color:rgba(255,179,71,0.85);letter-spacing:0.1em;margin-bottom:6px;font-weight:700;">&#9889; 3 THINGS TO MENTION</div>
+            <div style="font-size:0.72rem;line-height:1.6;color:var(--text-primary);">
+              1. They just raised Series B &mdash; congratulate<br>
+              2. Mutual connection: Jake M. (LinkedIn)<br>
+              3. Posted about scaling ops pain &middot; 3d ago
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;font-size:0.65rem;color:var(--text-secondary);align-items:center;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#ffb347;box-shadow:0 0 6px rgba(255,179,71,0.6);"></span>
+            Briefed in 2.3s &middot; Full context loaded
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 1: Scrape & Teardown -->
+      <div class="domore-screen" data-feat="1">
+        <div style="width:100%;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:0.6rem;color:rgba(255,179,71,0.85);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">COMPETITOR TEARDOWN</div>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);font-family:'JetBrains Mono',monospace;">50 SCRAPED &middot; 0:47:12</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+            <div style="padding:14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;text-align:center;">
+              <div style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#ffd166,#ff8a00);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">1,247</div>
+              <div style="font-size:0.58rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-top:2px;">ADS FOUND</div>
+            </div>
+            <div style="padding:14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;text-align:center;">
+              <div style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#ffd166,#ff8a00);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">23</div>
+              <div style="font-size:0.58rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-top:2px;">WINNING HOOKS</div>
+            </div>
+            <div style="padding:14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;text-align:center;">
+              <div style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#ffd166,#ff8a00);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">7</div>
+              <div style="font-size:0.58rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-top:2px;">PROVEN OFFERS</div>
+            </div>
+          </div>
+
+          <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;">
+            <div style="font-size:0.55rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-bottom:8px;font-weight:700;">TOP PERFORMING ANGLE</div>
+            <div style="font-size:0.78rem;font-weight:700;margin-bottom:4px;">"Stop hiring. Start deploying."</div>
+            <div style="font-size:0.65rem;color:var(--text-secondary);">Used by 12 competitors &middot; Avg CTR 4.8% &middot; Running 47 days</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 2: Autonomous Media Buying -->
+      <div class="domore-screen" data-feat="2">
+        <div style="width:100%;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:0.6rem;color:rgba(255,179,71,0.85);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">AD OPS LIVE FEED</div>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+            <div style="font-size:0.58rem;color:#ffb347;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#ffb347;box-shadow:0 0 6px rgba(255,179,71,0.8);"></span>LIVE</div>
+          </div>
+
+          <div class="mock-task" style="border:1px solid rgba(255,179,71,0.2);background:rgba(255,179,71,0.04);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(255,179,71,0.85);">+340%</span>
+            <span style="flex:1">Scaled <strong>Hook_v3 / Creative_A</strong> +$2K/day</span>
+            <span class="mock-status" style="background:rgba(255,179,71,0.12);color:#ffb347;">SCALED</span>
+          </div>
+          <div class="mock-task">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:#ff6b6b;">&minus;82%</span>
+            <span style="flex:1">Killed <strong>Hook_v1 / Creative_C</strong> (CPA $94)</span>
+            <span class="mock-status" style="background:rgba(255,107,107,0.15);color:#ff6b6b;">KILLED</span>
+          </div>
+          <div class="mock-task">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.5);">REBAL</span>
+            <span style="flex:1">Moved $840 from Google &rarr; Meta</span>
+            <span class="mock-status" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);">DONE</span>
+          </div>
+          <div class="mock-task">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(255,179,71,0.85);">+12 ads</span>
+            <span style="flex:1">Generated fresh creative batch</span>
+            <span class="mock-status" style="background:rgba(255,179,71,0.12);color:#ffb347;">LAUNCHED</span>
+          </div>
+
+          <div style="margin-top:14px;display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-secondary);padding-top:10px;border-top:1px solid var(--border-subtle);">
+            <span>Today's ROAS</span>
+            <span style="color:#ffb347;font-weight:700;font-family:'JetBrains Mono',monospace;">4.17x &#8599;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 3: Live Client P&L -->
+      <div class="domore-screen" data-feat="3">
+        <div style="width:100%;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:0.6rem;color:rgba(255,179,71,0.85);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">ACME CO &middot; P&amp;L</div>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);font-family:'JetBrains Mono',monospace;">MTD &middot; APR 2026</div>
+          </div>
+
+          <div style="padding:16px 18px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;">
+              <div>
+                <div style="font-size:0.55rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-bottom:4px;">NET INCOME</div>
+                <div style="font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#ffd166,#ff8a00);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-family:'JetBrains Mono',monospace;">$47,218</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:0.55rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-bottom:4px;">MARGIN</div>
+                <div style="font-size:1.1rem;font-weight:700;color:#ffb347;font-family:'JetBrains Mono',monospace;">32.4%</div>
+                <div style="font-size:0.55rem;color:var(--text-secondary);margin-top:2px;">&uarr; 4.1pts vs last mo.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+            <div style="padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:8px;">
+              <div style="font-size:0.55rem;color:var(--text-tertiary);margin-bottom:2px;">REVENUE</div>
+              <div style="font-size:0.78rem;font-weight:700;font-family:'JetBrains Mono',monospace;">$145.7K</div>
+            </div>
+            <div style="padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:8px;">
+              <div style="font-size:0.55rem;color:var(--text-tertiary);margin-bottom:2px;">COGS</div>
+              <div style="font-size:0.78rem;font-weight:700;font-family:'JetBrains Mono',monospace;">$62.3K</div>
+            </div>
+            <div style="padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:8px;">
+              <div style="font-size:0.55rem;color:var(--text-tertiary);margin-bottom:2px;">OPEX</div>
+              <div style="font-size:0.78rem;font-weight:700;font-family:'JetBrains Mono',monospace;">$36.2K</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;font-size:0.62rem;color:var(--text-secondary);display:flex;align-items:center;gap:6px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#ffb347;box-shadow:0 0 6px rgba(255,179,71,0.6);"></span>
+            Auto-refreshed 43 seconds ago &middot; 847 transactions reconciled
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 4: Ship Code On Command -->
+      <div class="domore-screen" data-feat="4">
+        <div style="width:100%;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <div style="font-size:0.6rem;color:rgba(255,179,71,0.85);font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">SHIP LOG</div>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+            <div style="font-size:0.58rem;color:var(--text-tertiary);font-family:'JetBrains Mono',monospace;">PR #847 &middot; MAIN</div>
+          </div>
+
+          <div style="padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border-subtle);border-radius:10px;margin-bottom:10px;">
+            <div style="font-size:0.55rem;color:var(--text-tertiary);letter-spacing:0.1em;margin-bottom:6px;">SPEC</div>
+            <div style="font-size:0.72rem;color:var(--text-secondary);font-style:italic;">"Add a billing page that shows current plan, usage, and lets users upgrade. Must support Stripe &amp; annual discounts."</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;">
+            <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.02);border-radius:6px;">
+              <span style="color:var(--text-secondary);">&#43; supabase migration</span>
+              <span style="color:#ffb347;">+3 &minus;0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.02);border-radius:6px;">
+              <span style="color:var(--text-secondary);">&#43; api/billing/route.ts</span>
+              <span style="color:#ffb347;">+147 &minus;0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.02);border-radius:6px;">
+              <span style="color:var(--text-secondary);">&#43; app/billing/page.tsx</span>
+              <span style="color:#ffb347;">+289 &minus;0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,0.02);border-radius:6px;">
+              <span style="color:var(--text-secondary);">&#43; tests/billing.spec.ts</span>
+              <span style="color:#ffb347;">+92 &minus;0</span>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,179,71,0.05);border:1px solid rgba(255,179,71,0.2);border-radius:10px;">
+            <span style="font-size:0.7rem;color:#ffb347;font-weight:700;">&#10003; Tests passing &middot; Deployed to prod</span>
+            <span style="font-size:0.58rem;color:var(--text-tertiary);font-family:'JetBrains Mono',monospace;">7m 14s</span>
+          </div>
+        </div>
+      </div>
+END OLD DOMORE -->
+
+<!-- CTA for /cold variant -->
+<section class="summary" id="cta" style="padding:80px 24px;">
+  <h2 style="margin-bottom:32px;">Ready to deploy?</h2>
+  <p class="summary-tagline" style="margin-bottom:36px;">For the price of <strong>one hire</strong>, you get the entire C-Suite.</p>
+  <div class="summary-cta">
+    <button class="btn-primary" onclick="window.location.href='/apply'">Deploy your agent now &rarr;</button>
+  </div>
+</section>
+
+<!-- START REMOVED BLOCK
+    <div class="fd-text">
+      <div class="fd-title">Live Intelligence</div>
+      <p class="fd-desc">Actively monitors all context to capture and update knowledgebases for people, teams, projects, decisions, updates, and more.</p>
+      <button class="fd-cta" onclick="window.location.href='/apply'">Get started &rarr;</button>
+    </div>
+    <div class="fd-visual">
+      <div class="hub-wrap">
+        <svg class="hub-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="hubPulseGrad">
+              <stop offset="0%" stop-color="#ffb347" stop-opacity="1"/>
+              <stop offset="50%" stop-color="#ff8a00" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#ff5c38" stop-opacity="0"/>
+            </radialGradient>
+            <!-- Paths from each outer node TO the center, for inbound animation -->
+            <path id="hubP1" d="M 200 60 L 200 200"/>
+            <path id="hubP2" d="M 321 120 L 200 200"/>
+            <path id="hubP3" d="M 321 280 L 200 200"/>
+            <path id="hubP4" d="M 200 340 L 200 200"/>
+            <path id="hubP5" d="M 79 280 L 200 200"/>
+            <path id="hubP6" d="M 79 120 L 200 200"/>
+          </defs>
+
+          <!-- Concentric guide rings for depth -->
+          <circle cx="200" cy="200" r="150" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-dasharray="2 4"/>
+          <circle cx="200" cy="200" r="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2 4"/>
+
+          <!-- Static connection lines -->
+          <line x1="200" y1="60"  x2="200" y2="200" stroke="rgba(255,179,71,0.18)" stroke-width="1"/>
+          <line x1="321" y1="120" x2="200" y2="200" stroke="rgba(255,179,71,0.18)" stroke-width="1"/>
+          <line x1="321" y1="280" x2="200" y2="200" stroke="rgba(255,179,71,0.18)" stroke-width="1"/>
+          <line x1="200" y1="340" x2="200" y2="200" stroke="rgba(255,179,71,0.18)" stroke-width="1"/>
+          <line x1="79"  y1="280" x2="200" y2="200" stroke="rgba(255,179,71,0.18)" stroke-width="1"/>
+          <line x1="79"  y1="120" x2="200" y2="200" stroke="rgba(255,179,71,0.18)" stroke-width="1"/>
+
+          <!-- Animated pulse dots flowing IN toward the center -->
+          <circle r="5" fill="url(#hubPulseGrad)">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin="0s">
+              <mpath href="#hubP1"/>
+            </animateMotion>
+          </circle>
+          <circle r="5" fill="url(#hubPulseGrad)">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.35s">
+              <mpath href="#hubP2"/>
+            </animateMotion>
+          </circle>
+          <circle r="5" fill="url(#hubPulseGrad)">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.7s">
+              <mpath href="#hubP3"/>
+            </animateMotion>
+          </circle>
+          <circle r="5" fill="url(#hubPulseGrad)">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.05s">
+              <mpath href="#hubP4"/>
+            </animateMotion>
+          </circle>
+          <circle r="5" fill="url(#hubPulseGrad)">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.4s">
+              <mpath href="#hubP5"/>
+            </animateMotion>
+          </circle>
+          <circle r="5" fill="url(#hubPulseGrad)">
+            <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.75s">
+              <mpath href="#hubP6"/>
+            </animateMotion>
+          </circle>
+        </svg>
+
+        <!-- Tool nodes positioned around the hub -->
+        <div class="hub-node" style="top:15%;left:50%;">&#128231;<div class="hub-node-label">Gmail</div></div>
+        <div class="hub-node" style="top:30%;left:80.25%;">&#128187;<div class="hub-node-label">GitHub</div></div>
+        <div class="hub-node" style="top:70%;left:80.25%;">&#128172;<div class="hub-node-label">Slack</div></div>
+        <div class="hub-node" style="top:85%;left:50%;">&#128202;<div class="hub-node-label">HubSpot</div></div>
+        <div class="hub-node" style="top:70%;left:19.75%;">&#128196;<div class="hub-node-label">Notion</div></div>
+        <div class="hub-node" style="top:30%;left:19.75%;">&#9889;<div class="hub-node-label">Zapier</div></div>
+
+        <!-- Central hub (Your Last Hire) -->
+        <div class="hub-center">
+          <div class="hub-center-icon">&#9889;</div>
+        </div>
+      </div>
+
+      <div class="hub-count">
+        <div class="hub-count-num">500+</div>
+        <div class="hub-count-label">Integrations supported</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Agent Analytics -->
+  <div class="features-deep-row">
+    <div class="fd-text">
+      <div class="fd-title">Agent Analytics</div>
+      <p class="fd-desc">Measure productivity across teams, monitor trends, and spot your top performers.</p>
+      <button class="fd-cta" onclick="window.location.href='/apply'">Get started &rarr;</button>
+    </div>
+    <div class="fd-visual">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div class="fd-stat-label">WORKSPACE AI PERCENTILE</div>
+          <div class="fd-stat fd-counter" data-target="94" data-suffix="%" style="background:linear-gradient(135deg,#ffd166 0%,#ff8a00 55%,#ff5c38 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;">0%</div>
+          <div class="fd-bar-chart">
+            <div class="fd-bar" style="height:40%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:60%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:45%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:75%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:55%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:80%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:65%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:90%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:82%;background:rgba(255,179,71,0.4);"></div>
+            <div class="fd-bar" style="height:95%;background:rgba(255,179,71,0.4);"></div>
+          </div>
+          <div style="font-size:0.65rem;color:#ffb347;margin-top:12px;font-weight:700;letter-spacing:0.1em;">&#8599; +23% THIS WEEK</div>
+        </div>
+        <div>
+          <div class="fd-stat-label">TOP PERFORMERS</div>
+          <div class="fd-leaderboard">
+            <div class="fd-lead-row"><span class="fd-lead-rank">1.</span><div class="fd-lead-avatar" style="background:rgba(255,179,71,0.15);border:1px solid rgba(255,179,71,0.3);">C</div><span class="fd-lead-name">Cortana <span class="fd-lead-role">CMO</span></span><span class="fd-lead-score fd-counter" data-target="129">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">2.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">A</div><span class="fd-lead-name">Arthur <span class="fd-lead-role">CEO</span></span><span class="fd-lead-score fd-counter" data-target="95">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">3.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">B</div><span class="fd-lead-name">Bart <span class="fd-lead-role">COO</span></span><span class="fd-lead-score fd-counter" data-target="94">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">4.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">J</div><span class="fd-lead-name">Jarvis <span class="fd-lead-role">CFO</span></span><span class="fd-lead-score fd-counter" data-target="79">0</span></div>
+            <div class="fd-lead-row"><span class="fd-lead-rank">5.</span><div class="fd-lead-avatar" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);">D</div><span class="fd-lead-name">Donna <span class="fd-lead-role">CTO</span></span><span class="fd-lead-score fd-counter" data-target="69">0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Ambient Awareness -->
+  <div class="features-deep-row">
+    <div class="fd-text">
+      <div class="fd-title">Ambient Awareness</div>
+      <p class="fd-desc">Instantly respond to your questions — giving you accurate, context-aware answers.</p>
+      <button class="fd-cta" onclick="window.location.href='/apply'">Get started &rarr;</button>
+    </div>
+    <div class="fd-visual">
+      <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+        <div class="fd-stat fd-counter" data-target="21700" data-format="k" style="font-size:2.5rem;background:linear-gradient(135deg,#ffd166 0%,#ff8a00 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;">0</div>
+        <div style="font-size:0.7rem;color:var(--text-tertiary);font-weight:600;letter-spacing:0.1em;">QUESTIONS ANSWERED</div>
+        <div style="margin-left:auto;font-size:0.7rem;color:#ffb347;font-weight:600;display:flex;align-items:center;"><span class="fd-online-dot"></span>22 AGENTS ONLINE</div>
+      </div>
+      <div class="fd-milestone complete" style="--fill:1;">
+        <div class="fd-milestone-row"><span class="fd-milestone-label">&#10003; Milestone complete</span><span class="fd-milestone-val">10,000</span></div>
+        <div class="fd-milestone-bar"><div class="fd-milestone-fill"></div></div>
+      </div>
+      <div class="fd-milestone complete" style="--fill:1;">
+        <div class="fd-milestone-row"><span class="fd-milestone-label">&#10003; Milestone complete</span><span class="fd-milestone-val">20,000</span></div>
+        <div class="fd-milestone-bar"><div class="fd-milestone-fill"></div></div>
+      </div>
+      <div class="fd-milestone" style="--fill:0.87;">
+        <div class="fd-milestone-row"><span class="fd-milestone-label">Next milestone</span><span class="fd-milestone-val">21,700 / 25,000</span></div>
+        <div class="fd-milestone-bar"><div class="fd-milestone-fill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom grid: 6 feature cards -->
+  <div class="fd-grid-bottom">
+    <div class="fd-grid-card">
+      <div class="fd-grid-icon">&#9881;</div>
+      <div class="fd-grid-name">BrainGPT</div>
+      <div class="fd-grid-desc">Proprietary models, architecture, and evals.</div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-icon">&#9776;</div>
+      <div class="fd-grid-name">Optimized Orchestration</div>
+      <div class="fd-grid-desc">Route to the best models from intent.</div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-icon">&#128300;</div>
+      <div class="fd-grid-name">Self-Learning</div>
+      <div class="fd-grid-desc">Continuous learning and improvement.</div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-icon">&#128161;</div>
+      <div class="fd-grid-name">Human-level Memory</div>
+      <div class="fd-grid-desc">Short, Long-Term, &amp; Episodic Memory.</div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-icon">&#128101;</div>
+      <div class="fd-grid-name">Sub-Agent Architecture</div>
+      <div class="fd-grid-desc">Multi-agent collaboration and delegation.</div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-icon">&#128269;</div>
+      <div class="fd-grid-name">Deep Research</div>
+      <div class="fd-grid-desc">Research optimally from compressed context.</div>
+    </div>
+  </div>
+
+  <!-- Bottom row: 3 wider cards -->
+  <div class="fd-grid-bottom">
+    <div class="fd-grid-card">
+      <div class="fd-grid-name">Audit everything</div>
+      <div class="fd-grid-desc">Extraordinary alignment with humans with advanced execution.</div>
+      <div style="margin-top:16px;">
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.7rem;margin-bottom:8px;"><span style="color:var(--accent-secondary);">&#10003;</span> Post comment to channel</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.7rem;margin-bottom:8px;"><span style="color:var(--accent-secondary);">&#10003;</span> Summarize weekly report</div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:0.7rem;"><span style="color:var(--accent-secondary);">&#10003;</span> Create task</div>
+      </div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-name">Zero data retention.<br>Zero training.</div>
+      <div class="fd-grid-desc">More secure than using OpenAI, Gemini directly.</div>
+    </div>
+    <div class="fd-grid-card">
+      <div class="fd-grid-name">Reflection</div>
+      <div class="fd-grid-desc">Advanced execution loops that ensure agents constantly reflect on work they're doing.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     SUMMARY
+======================================== -->
+<section class="summary" id="cta">
+  <h2>One agent spins up an entire <em>C-Suite of sub agents.</em></h2>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-card-icon" style="background:rgba(255,255,255,0.04)">&#128225;</div>
+      <div class="summary-card-name">CMO</div>
+      <div class="summary-card-desc">Campaigns, content, and brand — on autopilot.</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon" style="background:rgba(255,255,255,0.04)">&#128176;</div>
+      <div class="summary-card-name">CEO</div>
+      <div class="summary-card-desc">Qualify, outreach, and close — around the clock.</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon" style="background:rgba(255,255,255,0.04)">&#9881;</div>
+      <div class="summary-card-name">COO</div>
+      <div class="summary-card-desc">Workflows, scheduling, and reporting — handled.</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon" style="background:rgba(255,255,255,0.04)">&#128200;</div>
+      <div class="summary-card-name">CFO</div>
+      <div class="summary-card-desc">Cash flow, reconciliation, and compliance — tracked.</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon" style="background:rgba(255,255,255,0.04)">&#128187;</div>
+      <div class="summary-card-name">CTO</div>
+      <div class="summary-card-desc">Code, bugs, docs, and integrations — shipping.</div>
+    </div>
+  </div>
+  <p class="summary-tagline">For the price of <strong>one hire</strong>, you get the entire C-Suite.</p>
+  <div class="summary-cta">
+    <button class="btn-primary" onclick="window.location.href='/apply'">Deploy your agent now &rarr;</button>
+  </div>
+END REMOVED BLOCK -->
+
+<!-- ========================================
+     FOOTER
+======================================== -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-text">&copy; 2026 Your Last Hire. All rights reserved.</span>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========================================
+     EXPLORE AGENTS MODAL
+======================================== -->
+<div class="modal-overlay" id="agentModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-container">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-title">Agents for anything,<br>ready to deploy</div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="setModalTab(0)">CMO</button>
+      <button class="modal-tab" onclick="setModalTab(1)">CEO</button>
+      <button class="modal-tab" onclick="setModalTab(2)">COO</button>
+      <button class="modal-tab" onclick="setModalTab(3)">CFO</button>
+      <button class="modal-tab" onclick="setModalTab(4)">CTO</button>
+    </div>
+
+    <!-- CMO agents -->
+    <div class="modal-grid active" data-modal="0">
+      <div class="modal-hero-card" style="background:linear-gradient(135deg,#f3e8ff,#e8d5ff);">
+        <h3>Your CMO — without the salary.</h3>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128640;</div>
+        <div class="modal-agent-name">Media Buyer</div>
+        <div class="modal-agent-desc">Launches, manages, and scales Meta + Google ad campaigns. Kills losers, doubles down on winners, rebalances budget in real time.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128269;</div>
+        <div class="modal-agent-name">Competitor Intel</div>
+        <div class="modal-agent-desc">Scrapes 50+ competitor ad libraries, landing pages, and funnels daily. Extracts winning angles, hooks, and offers into a weekly report.</div>
+      </div>
+    </div>
+    <div class="modal-bottom-row" data-modal-row="0">
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#127912;</div>
+        <div class="modal-agent-name">Creative Generator</div>
+        <div class="modal-agent-desc">Generates static + UGC-style video ads from your winning concepts. Ships 20 new creative variations per week.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128202;</div>
+        <div class="modal-agent-name">Attribution Reporter</div>
+        <div class="modal-agent-desc">Real-time ROAS, cohort, and MER dashboards. Answers "which ad actually made us money this week" in one query.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(108,99,255,0.1);">&#128200;</div>
+        <div class="modal-agent-name">Funnel Architect</div>
+        <div class="modal-agent-desc">Builds complete funnels — landing pages, email sequences, retargeting — from a single brief.</div>
+      </div>
+    </div>
+
+    <!-- CEO agents -->
+    <div class="modal-grid" data-modal="1">
+      <div class="modal-hero-card" style="background:linear-gradient(135deg,#d5f5f0,#c0ece5);">
+        <h3>Your CEO — without the equity.</h3>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128270;</div>
+        <div class="modal-agent-name">Pre-Call Intelligence</div>
+        <div class="modal-agent-desc">Shows up to every sales call knowing everything. LinkedIn history, recent news, mutual connections, past emails, pain points — compiled into a one-page brief.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#127919;</div>
+        <div class="modal-agent-name">Pipeline Strategist</div>
+        <div class="modal-agent-desc">Scores every open deal daily. Tells you which to push, which to drop, and where to spend your time for max revenue impact.</div>
+      </div>
+    </div>
+    <div class="modal-bottom-row" data-modal-row="1" style="display:none;">
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128231;</div>
+        <div class="modal-agent-name">Executive Assistant</div>
+        <div class="modal-agent-desc">Triages inbox, drafts replies in your voice, schedules meetings, sends prep docs 15 min before every call.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128259;</div>
+        <div class="modal-agent-name">Follow-Up Orchestrator</div>
+        <div class="modal-agent-desc">Perfectly-timed multi-touch sequences for every deal stage. Never lets a hot prospect cool off.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(0,212,180,0.1);">&#128736;</div>
+        <div class="modal-agent-name">Strategy Copilot</div>
+        <div class="modal-agent-desc">Daily executive brief: pipeline movement, team blockers, KPI anomalies, and 3 decisions that need your attention.</div>
+      </div>
+    </div>
+
+    <!-- COO agents -->
+    <div class="modal-grid" data-modal="2">
+      <div class="modal-hero-card" style="background:linear-gradient(135deg,#ffe5e5,#ffd5d5);">
+        <h3>Your COO — without the overhead.</h3>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#9881;</div>
+        <div class="modal-agent-name">SOP Orchestrator</div>
+        <div class="modal-agent-desc">Turns your messy processes into bulletproof SOPs, then runs them — onboarding, fulfillment, QA, escalations — without human touch.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128101;</div>
+        <div class="modal-agent-name">Hiring Pipeline</div>
+        <div class="modal-agent-desc">Posts roles, screens applicants, runs first-round async interviews, schedules finalists. You only meet the top 3%.</div>
+      </div>
+    </div>
+    <div class="modal-bottom-row" data-modal-row="2" style="display:none;">
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128293;</div>
+        <div class="modal-agent-name">Bottleneck Hunter</div>
+        <div class="modal-agent-desc">Continuously audits every workflow. Finds bottlenecks, quantifies the cost, and proposes fixes before you notice them.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#9989;</div>
+        <div class="modal-agent-name">QA Auditor</div>
+        <div class="modal-agent-desc">Reviews every deliverable, client asset, and internal doc against your quality standards. Flags issues before they ship.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(255,107,107,0.1);">&#128230;</div>
+        <div class="modal-agent-name">Vendor &amp; Contracts</div>
+        <div class="modal-agent-desc">Negotiates renewals, tracks contract terms, spots price creep, and manages all vendor comms end-to-end.</div>
+      </div>
+    </div>
+
+    <!-- CFO agents -->
+    <div class="modal-grid" data-modal="3">
+      <div class="modal-hero-card" style="background:linear-gradient(135deg,#fff3d5,#ffe8b5);">
+        <h3>Your CFO — without the retainer.</h3>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128181;</div>
+        <div class="modal-agent-name">Full Bookkeeper</div>
+        <div class="modal-agent-desc">Categorizes every transaction across every account, every day. Month-end close in 12 minutes instead of 12 days.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128200;</div>
+        <div class="modal-agent-name">Client Dashboards</div>
+        <div class="modal-agent-desc">Real-time P&amp;L, margin, and cash position dashboards — per client, per project, per offer. Login links sent weekly.</div>
+      </div>
+    </div>
+    <div class="modal-bottom-row" data-modal-row="3" style="display:none;">
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128202;</div>
+        <div class="modal-agent-name">Forecasting Engine</div>
+        <div class="modal-agent-desc">Runs 6-month rolling cash flow forecasts with scenario modeling. Answers "can I afford to hire?" in seconds.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128231;</div>
+        <div class="modal-agent-name">AR &amp; Collections</div>
+        <div class="modal-agent-desc">Sends invoices, chases overdue accounts, escalates past 45 days. Recovers ~18% more on average.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(240,165,0,0.1);">&#128196;</div>
+        <div class="modal-agent-name">Tax Prep Assistant</div>
+        <div class="modal-agent-desc">Organizes receipts, docs, and deductions year-round. Hands your accountant a zipped, ready-to-file package.</div>
+      </div>
+    </div>
+
+    <!-- CTO agents -->
+    <div class="modal-grid" data-modal="4">
+      <div class="modal-hero-card" style="background:linear-gradient(135deg,#d5eeff,#c0e0ff);">
+        <h3>Your CTO — without the standup.</h3>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128187;</div>
+        <div class="modal-agent-name">Full-Stack Engineer</div>
+        <div class="modal-agent-desc">Ships production-ready features end-to-end — schema, API, UI, tests, migrations — from a plain-English spec.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128274;</div>
+        <div class="modal-agent-name">Security Auditor</div>
+        <div class="modal-agent-desc">Runs continuous dependency scans, SAST, and vulnerability patching. Locks down secrets, reviews IAM, flags exposure.</div>
+      </div>
+    </div>
+    <div class="modal-bottom-row" data-modal-row="4" style="display:none;">
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#9729;</div>
+        <div class="modal-agent-name">Infra Manager</div>
+        <div class="modal-agent-desc">Monitors AWS/Vercel/Supabase, auto-scales under load, rolls back bad deploys, and optimizes cloud spend monthly.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128279;</div>
+        <div class="modal-agent-name">Integration Builder</div>
+        <div class="modal-agent-desc">Wires up any API, webhook, or internal tool. If it has docs, it can be integrated in under an hour.</div>
+      </div>
+      <div class="modal-agent-card">
+        <div class="modal-agent-avatar" style="background:rgba(77,184,255,0.1);">&#128064;</div>
+        <div class="modal-agent-name">Code Reviewer</div>
+        <div class="modal-agent-desc">Reviews every PR for quality, patterns, performance, and security. Suggests refactors before merge.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Modal
+function openModal() {
+  const m = document.getElementById('agentModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => m.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  const m = document.getElementById('agentModal');
+  m.classList.remove('open');
+  setTimeout(() => { m.style.display = 'none'; }, 300);
+  document.body.style.overflow = '';
+}
+function setModalTab(idx) {
+  document.querySelectorAll('.modal-tab').forEach((t,i) => t.classList.toggle('active', i===idx));
+  document.querySelectorAll('.modal-grid').forEach((g,i) => g.classList.toggle('active', i===idx));
+  document.querySelectorAll('.modal-bottom-row').forEach((r,i) => r.style.display = i===idx ? 'grid' : 'none');
+}
+
+// Do More feature switching
+function setFeat(idx) {
+  document.querySelectorAll('.domore-feat').forEach((f,i) => f.classList.toggle('active', i===idx));
+  document.querySelectorAll('.domore-screen').forEach((s,i) => {
+    s.classList.toggle('active', i===idx);
+  });
+}
+
+// Animated counters + milestone progress fills using IntersectionObserver
+(function() {
+  function formatCount(n, suffix, format) {
+    if (format === 'k') {
+      return (n / 1000).toFixed(1) + 'K';
+    }
+    return Math.round(n).toLocaleString() + (suffix || '');
+  }
+
+  function animateCounter(el) {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const format = el.dataset.format || '';
+    const duration = 1800;
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const p = Math.min(1, elapsed / duration);
+      // easeOutExpo
+      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+      el.textContent = formatCount(target * eased, suffix, format);
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = formatCount(target, suffix, format);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('fd-counter')) {
+          animateCounter(entry.target);
+        }
+        if (entry.target.classList.contains('fd-milestone')) {
+          entry.target.classList.add('in-view');
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.fd-counter, .fd-milestone').forEach(el => io.observe(el));
+})();
+
+// Org chart — cycle task labels across the 3 branches to look like live deployment
+(function() {
+  const TASKS = [
+    'Custom dashboard',
+    'Scrape 50 competitors',
+    'Custom proposals',
+    'Pre-call briefs',
+    'Ad creative batch',
+    'Client P&L report',
+    'Month-end close',
+    'Hire pipeline run',
+    'Competitor teardown',
+    'Attribution audit',
+    'Onboarding sequence',
+    'Security scan',
+  ];
+
+  const slots = document.querySelectorAll('.org-task-label');
+  if (!slots.length) return;
+
+  // Inject transition style once
+  const style = document.createElement('style');
+  style.textContent = '.org-task-label{transition:opacity 0.4s ease;}';
+  document.head.appendChild(style);
+
+  // Track which tasks are currently visible to avoid duplicates
+  let current = Array.from(slots).map(el => el.textContent.trim());
+
+  function pickNew(excluded) {
+    const pool = TASKS.filter(t => !excluded.includes(t));
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  let nextSlot = 0;
+  function cycle() {
+    const slot = slots[nextSlot];
+    const newTask = pickNew(current);
+    // Fade out
+    slot.style.opacity = '0';
+    setTimeout(() => {
+      slot.textContent = newTask;
+      current[nextSlot] = newTask;
+      slot.style.opacity = '1';
+    }, 400);
+    nextSlot = (nextSlot + 1) % slots.length;
+  }
+
+  // Cycle one slot every 2.2s (staggered so at any moment one slot is transitioning)
+  setInterval(cycle, 2200);
+})();
+</script>
+
+</body>
+</html>

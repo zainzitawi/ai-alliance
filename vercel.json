@@ -2,7 +2,8 @@
   "rewrites": [
     { "source": "/v2", "destination": "/v2/index.html" },
     { "source": "/apply", "destination": "/apply.html" },
-    { "source": "/((?!v2|apply).*)", "destination": "/index.html" }
+    { "source": "/cold", "destination": "/cold.html" },
+    { "source": "/((?!v2|apply|cold).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
